@@ -1,4 +1,7 @@
 #include "raylib.h"
+#include "Screen.h"
+#include "GameStatus.h"
+#include "LogoScreen.h"
 
 const int ScreenWidth = 1280;
 const int ScreenHeight = 720;
@@ -9,30 +12,18 @@ int main(void) {
 
     SetTargetFPS(60);
 
-    // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
+    GameStatus *status = new GameStatus(new LogoScreen());
 
-        // Draw
-        //----------------------------------------------------------------------------------
+    while (!WindowShouldClose()) {
+        status->update();
+
         BeginDrawing();
-
-        ClearBackground(RAYWHITE);
-
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-
+        status->getCurrentScreen()->draw();
         EndDrawing();
-        //----------------------------------------------------------------------------------
     }
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+    delete status;
+    CloseWindow();
 
     return 0;
 }
