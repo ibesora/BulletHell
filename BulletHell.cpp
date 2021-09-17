@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "Screen.h"
 #include "GameStatus.h"
-#include "LogoScreen.h"
+#include "TitleScreen.h"
 
 const int ScreenWidth = 1280;
 const int ScreenHeight = 720;
@@ -12,7 +12,7 @@ int main(void) {
 
     SetTargetFPS(60);
 
-    GameStatus *status = new GameStatus(new LogoScreen());
+    GameStatus *status = new GameStatus(new TitleScreen());
 
     while (!WindowShouldClose()) {
         status->update();

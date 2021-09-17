@@ -1,5 +1,5 @@
 #pragma once
-enum class ScreenType { Logo, Title, Pause, Gameplay, Ending };
+enum class ScreenType { Logo, Title, Pause, Gameplay, Ending, Credits };
 
 class GameStatus;
 
