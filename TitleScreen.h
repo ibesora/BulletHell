@@ -1,14 +1,13 @@
 #pragma once
 #include "Screen.h"
 
-enum class Option : int { StartGame = 0, Credits, End };
-
 class TitleScreen : public Screen {
 public:
-    TitleScreen();
+    TitleScreen(const bool shouldAnimate = true);
     void updateGameStatus(GameStatus *current);
     void draw();
 private:
+    enum class Option : int { StartGame = 0, Credits, End };
     int currentFrame;
     Option currentSelectedOption;
 };

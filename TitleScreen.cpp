@@ -8,8 +8,8 @@
 
 const int TransitionDurationInFrames = 120;
 
-TitleScreen::TitleScreen() : Screen(ScreenType::Title) {
-    this->currentFrame = 0;
+TitleScreen::TitleScreen(const bool shouldAnimate) : Screen(ScreenType::Title) {
+    this->currentFrame = shouldAnimate ? 0 : TransitionDurationInFrames;
     this->currentSelectedOption = Option::StartGame;
 }
 
