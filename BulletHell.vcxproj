@@ -156,6 +156,7 @@
     <ClCompile Include="GameStatus.cpp" />
     <ClCompile Include="LogoScreen.cpp" />
     <ClCompile Include="PauseScreen.cpp" />
+    <ClCompile Include="InputSequence.cpp" />
     <ClCompile Include="TitleScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="EndingScreen.h" />
     <ClInclude Include="GameplayScreen.h" />
     <ClInclude Include="GameStatus.h" />
+    <ClInclude Include="InputSequence.h" />
     <ClInclude Include="PauseScreen.h" />
     <ClInclude Include="TitleScreen.h" />
     <ClInclude Include="LogoScreen.h" />
