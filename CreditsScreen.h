@@ -3,6 +3,6 @@
 
 class CreditsScreen : public Screen {
 public:
-    CreditsScreen();
-    void draw();
+    CreditsScreen(int width, int height);
+    void draw(GameStatus *current);
 };

@@ -3,9 +3,9 @@
 
 class PauseScreen : public Screen {
 public:
-    PauseScreen();
+    PauseScreen(int width, int height);
     void updateGameStatus(GameStatus *current);
-    void draw();
+    void draw(GameStatus *current);
 private:
     enum class Option : int { Continue = 0, BackToTitleScreen, End };
     Option currentSelectedOption;

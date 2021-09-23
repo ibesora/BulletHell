@@ -12,7 +12,7 @@ const int FadeOutFramesNum = 0;
 const int FadeOutStartFramesNum = FadeInFramesNum + VisibleFramesNum;
 const int TotalFramesNum = FadeInFramesNum + VisibleFramesNum + FadeOutFramesNum;
 
-EndingScreen::EndingScreen() : Screen(ScreenType::Pause) {
+EndingScreen::EndingScreen(int width, int height) : Screen(ScreenType::Pause, width, height) {
     this->currentFrame = 0;
     this->currentSelectedOption = Option::NextRun;
 }
@@ -24,13 +24,13 @@ void EndingScreen::updateGameStatus(GameStatus *current) {
         if (IsKeyPressed(KEY_DOWN)) this->currentSelectedOption = static_cast<Option>((selectedOption + 1) % optionNum);
         else if (IsKeyPressed(KEY_UP)) this->currentSelectedOption = static_cast<Option>(abs((selectedOption - 1) % optionNum));
         else if (IsKeyPressed(KEY_ENTER)) {
-            Screen *nextScreen = this->currentSelectedOption == Option::NextRun ? (Screen *)(new GameplayScreen()) : (Screen *)(new TitleScreen(false));
+            Screen *nextScreen = this->currentSelectedOption == Option::NextRun ? (Screen *)(new GameplayScreen(this->width, this->height)) : (Screen *)(new TitleScreen(this->width, this->height, false));
             current->changeCurrentScreen(nextScreen);
         }
     }
 }
 
-void EndingScreen::draw() {
+void EndingScreen::draw(GameStatus *current) {
     ClearBackground(BLACK);
 
     if (this->currentFrame < TotalFramesNum) {

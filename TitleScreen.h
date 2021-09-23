@@ -3,9 +3,9 @@
 
 class TitleScreen : public Screen {
 public:
-    TitleScreen(const bool shouldAnimate = true);
+    TitleScreen(int width, int height, const bool shouldAnimate = true);
     void updateGameStatus(GameStatus *current);
-    void draw();
+    void draw(GameStatus *current);
 private:
     enum class Option : int { StartGame = 0, Credits, End };
     int currentFrame;

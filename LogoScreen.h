@@ -4,9 +4,9 @@
 
 class LogoScreen : public Screen {
 public:
-    LogoScreen();
+    LogoScreen(int width, int height);
     void updateGameStatus(GameStatus *current);
-    void draw();
+    void draw(GameStatus *current);
 private:
     int currentFrame;
 };
