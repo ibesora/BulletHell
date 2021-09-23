@@ -12,14 +12,18 @@ public:
     void updatePosition(float x, float y);
     void changeCurrentScreen(Screen *nextScreen);
     Vector2 getCurrentPosition();
-    bool wasPlayerGoingRight();
-    bool wasPlayerGoingLeft();
+    bool isPlayerGoingRight();
+    bool isPlayerGoingLeft();
+    bool isPlayerGoingUp();
+    bool isPlayerGoingDown();
     ~GameStatus();
 
 protected:
     bool isPlaying;
-    bool wasGoingRight;
-    bool wasGoingLeft;
+    bool isGoingRight;
+    bool isGoingLeft;
+    bool isGoingUp;
+    bool isGoingDown;
     Screen *currentScreen;
     Vector2 currentPosition;
 };
