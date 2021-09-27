@@ -17,6 +17,8 @@ public:
 
 	InputSequence(int maxElements);
 	void add(KeyStatus status, KeyboardKey key);
+	int size();
+	Input last();
 	void clear();
 	bool checkSequence(std::vector<Input>, std::chrono::milliseconds elapsedTime = std::chrono::milliseconds::zero());
 private:

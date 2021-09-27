@@ -14,6 +14,14 @@ void InputSequence::add(KeyStatus status, KeyboardKey key) {
 	if (this->inputSequence.size() > this->maxElements) this->inputSequence.pop();
 }
 
+int InputSequence::size() {
+	return this->inputSequence.size();
+}
+
+InputSequence::Input InputSequence::last() {
+	return this->inputSequence.back();
+}
+
 void InputSequence::clear() {
 	while (!this->inputSequence.empty())
 		this->inputSequence.pop();
