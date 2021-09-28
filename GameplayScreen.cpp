@@ -6,7 +6,7 @@
 
 const int XSpeed = 20;
 const int YSpeed = 20;
-const int BackgroundSpeed = 1;
+const int BackgroundSpeed = 5;
 const int MaxRollAnimationFrame = 10;
 const int MaxPitchAnimationFrame = 5;
 const int MaxInputSequenceDelayInFrames = 45;

@@ -5,6 +5,7 @@
 
 const int BackgroundWidthInPx = 1920;
 const int StarshipWidthInPx = 256;
+const int StarshipHeightInPx = 256;
 
 GameStatus::GameStatus(Screen* initialScreen) {
     this->isPlaying = false;
@@ -15,7 +16,7 @@ GameStatus::GameStatus(Screen* initialScreen) {
     this->isRightBarrelRolling = false;
     this->isLeftBarrelRolling = false;
     this->currentScreen = initialScreen;
-    this->currentPosition = { 0.0f, 0.0f };
+    this->currentPosition = { (float)initialScreen->getWidth()/2 - StarshipWidthInPx/2, (float)initialScreen->getHeight() - StarshipHeightInPx };
 }
 
 Screen* GameStatus::getCurrentScreen() {
