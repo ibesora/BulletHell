@@ -9,7 +9,15 @@ public:
     void updateGameStatus(GameStatus *current);
     void draw(GameStatus *current);
     ~GameplayScreen();
+
 private:
+    struct CloudInfo {
+        int speed;
+        int y;
+        CloudInfo(int speed, int y) : speed(speed), y(y) {
+        }
+    };
+
     void updateInputSequence();
     void drawBackground();
     void drawStarship(GameStatus *status);
@@ -27,4 +35,5 @@ private:
     Rectangle currentBackgroundRect;
     std::vector<InputSequence::Input> barrelRollRightKeySequence;
     std::vector<InputSequence::Input> barrelRollLeftKeySequence;
+    std::vector<CloudInfo> cloudPositions;
 };

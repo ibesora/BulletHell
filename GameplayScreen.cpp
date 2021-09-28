@@ -3,6 +3,7 @@
 #include "PauseScreen.h"
 #include "GameStatus.h"
 #include "InputSequence.h"
+#include <cstdlib>
 
 const int XSpeed = 20;
 const int YSpeed = 20;
@@ -13,6 +14,9 @@ const int MaxInputSequenceDelayInFrames = 45;
 const int RollTimeInMilliseconds = 150;
 const int StarshipWidthInPx = 256;
 const int BackgroundWidthInPx = 1920;
+const int CloudsMinSpeed = 5;
+const int CloudsMaxSpeed = 10;
+const float CloudProbability = 0.015f;
 
 GameplayScreen::GameplayScreen(int width, int height) : Screen(ScreenType::Gameplay, width, height) {
     this->inputSequenceFrame = 0;
@@ -148,6 +152,20 @@ void GameplayScreen::updateGameStatus(GameStatus *status) {
 
         this->currentBackgroundRect.y -= (float)BackgroundSpeed;
 
+        // Check if we add another cloud layer
+        const float diceThrow = (float)std::rand() / (float)RAND_MAX;
+        const bool shouldWeAddACloud = diceThrow < CloudProbability;
+        if (shouldWeAddACloud) {
+            const int speed = (float)(std::rand() % (CloudsMaxSpeed - CloudsMinSpeed) + CloudsMinSpeed);
+            CloudInfo info = CloudInfo(speed, -this->foregroundTexture.height);
+            this->cloudPositions.push_back(info);
+        }
+
+        // Clouds position update
+        for (int i = 0; i < this->cloudPositions.size(); ++i) {
+            this->cloudPositions[i].y += this->cloudPositions[i].speed;
+        }
+
     }
 }
 
@@ -174,6 +192,11 @@ void GameplayScreen::drawStarship(GameStatus *status) {
 }
 
 void GameplayScreen::drawForeground() {
+
+    const Rectangle rect = { this->currentBackgroundRect.x, 0.0f, (float)this->width, (float)this->foregroundTexture.height };
+    for (int i = 0; i < this->cloudPositions.size(); ++i) {
+        DrawTextureRec(this->foregroundTexture, rect, { 0.0f, (float)this->cloudPositions[i].y }, WHITE);
+    }
 
 }
 
