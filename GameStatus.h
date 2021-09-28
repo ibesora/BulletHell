@@ -14,10 +14,12 @@ public:
     void updatePosition(float x, float y);
     void changeCurrentScreen(Screen *nextScreen);
     Vector2 getCurrentPosition();
+    Vector2 getCurrentScreenPosition();
     bool isPlayerGoingRight();
     bool isPlayerGoingLeft();
     bool isPlayerGoingUp();
     bool isPlayerGoingDown();
+    bool isPlayerBarrelRolling();
     bool isPlayerBarrelRollingRight();
     bool isPlayerBarrelRollingLeft();
     ~GameStatus();

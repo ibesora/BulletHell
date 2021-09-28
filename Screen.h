@@ -12,6 +12,8 @@ public:
     };
 
     ScreenType getType() { return this->type; }
+    int getWidth() { return this->width; }
+    int getHeight() { return this->height; }
 
     virtual void updateGameStatus(GameStatus *) {};
     virtual void draw(GameStatus*) = 0;

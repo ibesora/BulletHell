@@ -11,6 +11,9 @@ public:
     ~GameplayScreen();
 private:
     void updateInputSequence();
+    void drawBackground();
+    void drawStarship(GameStatus *status);
+    void drawForeground();
 
     int inputSequenceFrame;
     InputSequence *inputSequence;
@@ -18,7 +21,10 @@ private:
     int currentPitchFrame;
     Texture2D starshipRollTexture;
     Texture2D starshipPitchTexture;
+    Texture2D backgroundTexture;
+    Texture2D foregroundTexture;
     Rectangle currentFrameRec;
+    Rectangle currentBackgroundRect;
     std::vector<InputSequence::Input> barrelRollRightKeySequence;
     std::vector<InputSequence::Input> barrelRollLeftKeySequence;
 };
