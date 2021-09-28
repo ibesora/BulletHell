@@ -4,6 +4,7 @@
 #include "TitleScreen.h"
 #include "GameStatus.h"
 #include "Animations.h"
+#include "AssetStore.h"
 #include <stdlib.h>
 
 const int FadeInFramesNum = 60;
