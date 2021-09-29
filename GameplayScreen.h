@@ -16,6 +16,7 @@ private:
     void drawStarship();
     void drawForeground();
     void drawBullets();
+    void drawEnemies();
     
     Rectangle currentFrameRec;
     Rectangle currentBackgroundRect;

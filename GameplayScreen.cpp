@@ -70,8 +70,9 @@ void GameplayScreen::draw() {
 
     ClearBackground(BLACK);
     this->drawBackground();
-    this->drawBullets();
+    this->drawEnemies();
     this->drawStarship();
+    this->drawBullets();
     this->drawForeground();
 
 }
@@ -103,4 +104,10 @@ void GameplayScreen::drawBullets() {
         GameStatus::BulletInfo bullet = GameStatus::getInstance().getBullet(i);
         DrawCircleGradient((int)bullet.position.x - GameStatus::getInstance().getBackgroundPosition().x, (int)bullet.position.y, BulletRadius, YELLOW, RED);
     }
+}
+
+void GameplayScreen::drawEnemies() {
+    const Rectangle rect = { 0.0f, 0.0f, (float)AssetStore::getInstance().getMainEnemyTexture().width, (float)AssetStore::getInstance().getMainEnemyTexture().height };
+    const Vector2 position = { 560.0f - GameStatus::getInstance().getBackgroundPosition().x, -250.0f };
+    DrawTextureRec(AssetStore::getInstance().getMainEnemyTexture(), rect, position, WHITE);
 }

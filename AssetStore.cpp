@@ -4,6 +4,7 @@ AssetStore::AssetStore() {
     this->starshipPitchTexture = LoadTexture("assets/SF01b_strip60.png");
     this->backgroundTexture = LoadTexture("assets/desert-background.png");
     this->foregroundTexture = LoadTexture("assets/clouds.png");
+    this->mainEnemyTexture = LoadTexture("assets/enemy_big.png");
 }
 
 AssetStore& AssetStore::getInstance() {

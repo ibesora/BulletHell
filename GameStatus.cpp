@@ -70,6 +70,7 @@ void GameStatus::update() {
         this->updateInputs();
         this->updateBullets();
         this->updateStarship();
+        this->updateEnemies();
         this->updateBackground();
         this->updateClouds();
     }
@@ -178,6 +179,10 @@ void GameStatus::updateStarship() {
     else if (InputHandler::getInstance().isKeyReleased(KEY_SPACE) && !this->isPlayerBarrelRolling()) {
         this->createBullet();
     }
+}
+
+void GameStatus::updateEnemies() {
+
 }
 
 void GameStatus::createBullet() {

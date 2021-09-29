@@ -23,6 +23,7 @@ public:
     void updateInputs();
     void updateBullets();
     void updateStarship();
+    void updateEnemies();
     void updateBackground();
     void updateClouds();
     void updateMovementFlags(bool goingRight, bool goingLeft, bool goingUp, bool goingDown);
