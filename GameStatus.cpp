@@ -87,13 +87,23 @@ void GameStatus::updateInputs() {
 }
 
 void GameStatus::updateBullets() {
+    std::vector<BulletInfo> aux;
+    bool isEnemyBeingHit = false;
     for (int i = 0; i < this->bulletPositions.size(); ++i) {
         BulletInfo current = this->bulletPositions[i];
         this->bulletPositions[i].position = {
             current.position.x + current.speed.x,
             current.position.y + current.speed.y
         };
+        if (!this->enemy->checkCollision(this->bulletPositions[i].position)) {
+            aux.push_back(this->bulletPositions[i]);
+        }
+        else {
+            isEnemyBeingHit = true;
+        }
     }
+    this->bulletPositions = aux;
+    this->enemy->setIsBeingHit(isEnemyBeingHit);
 }
 
 void GameStatus::updateStarship() {
@@ -253,7 +263,7 @@ void GameStatus::changeCurrentScreen(Screen *nextScreen) {
     this->isPlaying = (this->currentScreen->getType() == ScreenType::Gameplay);
 }
 
-Vector2 GameStatus::getCurrentPosition() {
+Vector2 GameStatus::getPlayerPosition() {
     // Gets the current absolute position (this can be out of the window bounds on X axis)
     return this->currentPosition;
 }
@@ -262,7 +272,7 @@ Vector2 GameStatus::getEnemyPosition() {
     return this->enemy->getPosition();
 }
 
-Vector2 GameStatus::getCurrentScreenPosition() {
+Vector2 GameStatus::getPlayerScreenPosition() {
     // If X position is less than half the screen width, we set that as X position
     // If it's in between half the screen width and BacgroundWidthInPx - halfWidth we set the X as the center screen
     // If X position is more than BacgroundWidthInPx - halfWidth we set that as the X position
@@ -297,6 +307,7 @@ int GameStatus::getBulletsNumber() { return this->bulletPositions.size(); }
 GameStatus::BulletInfo GameStatus::getBullet(int index) { return this->bulletPositions[index]; }
 int GameStatus::getEnemyBulletsNumber() { return this->enemy->getBulletPositions().size(); }
 GameStatus::BulletInfo GameStatus::getEnemyBullet(int index) { return this->enemy->getBulletPositions()[index]; }
+bool GameStatus::isEnemyBeingHit() { return this->enemy->isBeingHit(); }
 
 GameStatus::~GameStatus() {
     delete this->currentScreen;

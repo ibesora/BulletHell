@@ -82,11 +82,19 @@ void GameplayScreen::drawBackground() {
 
 void GameplayScreen::drawStarship() {
     if ((GameStatus::getInstance().isPlayerGoingUp() || GameStatus::getInstance().isPlayerGoingDown()) && !GameStatus::getInstance().isPlayerGoingRight() && !GameStatus::getInstance().isPlayerGoingLeft()) {
-        DrawTextureRec(AssetStore::getInstance().getStarshipPitchTexture(), this->currentFrameRec, GameStatus::getInstance().getCurrentScreenPosition(), WHITE);
+        DrawTextureRec(AssetStore::getInstance().getStarshipPitchTexture(), this->currentFrameRec, GameStatus::getInstance().getPlayerScreenPosition(), WHITE);
     }
     else {
-        DrawTextureRec(AssetStore::getInstance().getStarshipRollTexture(), this->currentFrameRec, GameStatus::getInstance().getCurrentScreenPosition(), WHITE);
+        DrawTextureRec(AssetStore::getInstance().getStarshipRollTexture(), this->currentFrameRec, GameStatus::getInstance().getPlayerScreenPosition(), WHITE);
     }
+    const Vector2 pos = GameStatus::getInstance().getPlayerScreenPosition();
+    const int starshipWidth = 256;
+    const int starshipHeight = 256;
+    DrawTriangle(
+        { pos.x + starshipWidth / 2, pos.y + 10},
+        { pos.x + 30, pos.y + starshipHeight -60 },
+        { pos.x + starshipWidth -30, pos.y + starshipHeight -60 },
+        Fade(VIOLET, 0.7f));
 }
 
 void GameplayScreen::drawForeground() {
@@ -109,7 +117,7 @@ void GameplayScreen::drawEnemies() {
     const Rectangle rect = { 0.0f, 0.0f, (float)AssetStore::getInstance().getMainEnemyTexture().width, (float)AssetStore::getInstance().getMainEnemyTexture().height };
     const Vector2 absoluteEnemyPosition = GameStatus::getInstance().getEnemyPosition();
     Vector2 position = { absoluteEnemyPosition.x - GameStatus::getInstance().getBackgroundPosition().x, absoluteEnemyPosition.y};
-    DrawTextureRec(AssetStore::getInstance().getMainEnemyTexture(), rect, position, WHITE);
+    DrawTextureRec(AssetStore::getInstance().getMainEnemyTexture(), rect, position, GameStatus::getInstance().isEnemyBeingHit() ? RED : WHITE);
 }
 
 void GameplayScreen::drawEnemyBullets() {

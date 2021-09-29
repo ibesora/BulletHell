@@ -16,6 +16,7 @@ Enemy::Enemy(float x, float y) {
 	this->currentBulletPattern = new CircleBulletPattern();
 	this->currentDirection = 1;
 	this->position = { x, y };
+	this->updateBoundingTriangle();
 	this->currentFrame = 0;
 	this->isRightTurretActive = true;
 	this->isLeftTurretActive = false;
@@ -31,6 +32,13 @@ void Enemy::updatePosition() {
 	if (this->position.x < 0 || this->position.x > BackgroundWidthInPx - StarshipWidthInPx) {
 		this->currentDirection *= -1;
 	}
+	this->updateBoundingTriangle();
+}
+
+void Enemy::updateBoundingTriangle() {
+	this->boundingTriangle[0] = { this->position.x + 256 - 10, this->position.y + 70 };
+	this->boundingTriangle[1] = { this->position.x + 10, this->position.y + 70 };
+	this->boundingTriangle[2] = { this->position.x + 128, this->position.y + 256 - 30 };
 }
 
 void Enemy::updateBullets() {
@@ -101,6 +109,18 @@ Vector2 Enemy::getLeftTurretPosition() {
 
 std::vector<GameStatus::BulletInfo> Enemy::getBulletPositions() {
 	return this->bulletPositions;
+}
+
+bool Enemy::checkCollision(Vector2 point) {
+	return CheckCollisionPointTriangle(point, this->boundingTriangle[0], this->boundingTriangle[1], this->boundingTriangle[2]);
+}
+
+void Enemy::setIsBeingHit(bool isHit) {
+	this->beingHit = isHit;
+}
+
+bool Enemy::isBeingHit() {
+	return this->beingHit;
 }
 
 Enemy::~Enemy() {

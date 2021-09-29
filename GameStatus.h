@@ -22,9 +22,9 @@ public:
     Screen *getCurrentScreen();
     void update();
     void changeCurrentScreen(Screen *nextScreen);
-    Vector2 getCurrentPosition();
+    Vector2 getPlayerPosition();
     Vector2 getEnemyPosition();
-    Vector2 getCurrentScreenPosition();
+    Vector2 getPlayerScreenPosition();
     Vector2 getBackgroundPosition();
     int getCurrentRollFrame();
     int getCurrentPitchFrame();
@@ -41,13 +41,13 @@ public:
     BulletInfo getBullet(int index);
     int getEnemyBulletsNumber();
     BulletInfo getEnemyBullet(int index);
+    bool isEnemyBeingHit();
     ~GameStatus();
 
 protected:
     GameStatus();
     void updateInputs();
     void updateBullets();
-    void updateEnemyBullets();
     void updateStarship();
     void updateEnemies();
     void updateBackground();
