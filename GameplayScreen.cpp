@@ -8,6 +8,7 @@
 
 const int StarshipWidthInPx = 256;
 const int BackgroundWidthInPx = 1920;
+const int BulletRadius = 10;
 
 GameplayScreen::GameplayScreen(int width, int height) : Screen(ScreenType::Gameplay, width, height) {
     this->currentFrameRec = { 0.0f, 0.0f, (float)AssetStore::getInstance().getStarshipRollTexture().width / 60, (float)AssetStore::getInstance().getStarshipRollTexture().height };
@@ -69,6 +70,7 @@ void GameplayScreen::draw() {
 
     ClearBackground(BLACK);
     this->drawBackground();
+    this->drawBullets();
     this->drawStarship();
     this->drawForeground();
 
@@ -94,4 +96,11 @@ void GameplayScreen::drawForeground() {
         DrawTextureRec(AssetStore::getInstance().getForegroundTexture(), rect, { 0.0f, (float)GameStatus::getInstance().getCloudYPosition(i) }, WHITE);
     }
 
+}
+
+void GameplayScreen::drawBullets() {
+    for (int i = 0; i < GameStatus::getInstance().getBulletsNumber(); ++i) {
+        GameStatus::BulletInfo bullet = GameStatus::getInstance().getBullet(i);
+        DrawCircleGradient((int)bullet.position.x - GameStatus::getInstance().getBackgroundPosition().x, (int)bullet.position.y, BulletRadius, YELLOW, RED);
+    }
 }

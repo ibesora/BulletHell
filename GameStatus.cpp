@@ -16,6 +16,8 @@ const int StarshipHeightInPx = 256;
 const int CloudsMinSpeed = 5;
 const int CloudsMaxSpeed = 10;
 const float CloudProbability = 0.015f;
+const int FramesPerBullet = 5;
+const int BulletSpeed = 15;
 
 GameStatus::GameStatus() {
     this->isPlaying = false;
@@ -27,6 +29,9 @@ GameStatus::GameStatus() {
     this->isLeftBarrelRolling = false;
     this->currentPosition = { 0.0f, 0.0f };
     this->currentScreen = nullptr;
+    this->currentRollFrame = 0;
+    this->currentPitchFrame = 0;
+    this->currentBulletFrame = 0;
 }
 
 GameStatus &GameStatus::getInstance() {
@@ -51,6 +56,7 @@ void GameStatus::reset() {
     this->currentPitchFrame = 0;
     this->currentPosition = { (float)this->currentScreen->getWidth() / 2 - StarshipWidthInPx / 2, (float)this->currentScreen->getHeight() - StarshipHeightInPx };
     this->cloudPositions.clear();
+    this->bulletPositions.clear();
     InputHandler::getInstance().reset();
 }
 
@@ -62,6 +68,7 @@ void GameStatus::update() {
 
     if (this->isPlaying) {
         this->updateInputs();
+        this->updateBullets();
         this->updateStarship();
         this->updateBackground();
         this->updateClouds();
@@ -74,6 +81,16 @@ void GameStatus::updateInputs() {
     InputHandler::getInstance().update();
     if (InputHandler::getInstance().checkRightBarrelRoll()) this->setIsRightBarrelRolling(true);
     else if (InputHandler::getInstance().checkLeftBarrelRoll()) this->setIsLeftBarrelRolling(true);
+}
+
+void GameStatus::updateBullets() {
+    for (int i = 0; i < this->bulletPositions.size(); ++i) {
+        BulletInfo current = this->bulletPositions[i];
+        this->bulletPositions[i].position = {
+            current.position.x + current.speed.x,
+            current.position.y + current.speed.y
+        };
+    }
 }
 
 void GameStatus::updateStarship() {
@@ -150,6 +167,24 @@ void GameStatus::updateStarship() {
         this->currentRollFrame--;
         if (this->currentRollFrame == 0) this->updateMovementFlags(this->isGoingRight, false, this->isGoingUp, this->isGoingDown);
     }
+
+    if (InputHandler::getInstance().isKeyDown(KEY_SPACE) && !this->isPlayerBarrelRolling()) {
+        this->currentBulletFrame++;
+        if (this->currentBulletFrame == FramesPerBullet) {
+            this->currentBulletFrame = 0;
+            this->createBullet();
+        }
+    }
+    else if (InputHandler::getInstance().isKeyReleased(KEY_SPACE) && !this->isPlayerBarrelRolling()) {
+        this->createBullet();
+    }
+}
+
+void GameStatus::createBullet() {
+    this->bulletPositions.push_back(BulletInfo({ 0.0f, (float)-BulletSpeed }, {
+        this->currentPosition.x + StarshipWidthInPx / 2,
+        this->currentPosition.y + 10
+        }));
 }
 
 void GameStatus::updateBackground() {
@@ -246,6 +281,9 @@ bool GameStatus::isPlayerBarrelRollingLeft() { return this->isLeftBarrelRolling;
 bool GameStatus::isPlayerBarrelRollingRight() { return this->isRightBarrelRolling; }
 int GameStatus::getCloudsNumber() { return this->cloudPositions.size(); }
 int GameStatus::getCloudYPosition(int index) { return this->cloudPositions[index].y; }
+
+int GameStatus::getBulletsNumber() { return this->bulletPositions.size(); }
+GameStatus::BulletInfo GameStatus::getBullet(int index) { return this->bulletPositions[index]; }
 
 GameStatus::~GameStatus() {
     delete this->currentScreen;
