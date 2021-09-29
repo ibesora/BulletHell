@@ -13,7 +13,7 @@ TitleScreen::TitleScreen(int width, int height, const bool shouldAnimate) : Scre
     this->currentSelectedOption = Option::StartGame;
 }
 
-void TitleScreen::updateGameStatus(GameStatus *current) {
+void TitleScreen::updateGameStatus() {
     if (this->currentFrame >= TransitionDurationInFrames) {
         const int selectedOption = static_cast<int>(this->currentSelectedOption);
         const int optionNum = static_cast<int>(Option::End);
@@ -21,12 +21,13 @@ void TitleScreen::updateGameStatus(GameStatus *current) {
         else if (IsKeyPressed(KEY_UP)) this->currentSelectedOption = static_cast<Option>(abs((selectedOption - 1) % optionNum));
         else if (IsKeyPressed(KEY_ENTER)) {
             Screen *nextScreen = this->currentSelectedOption == Option::StartGame ? (Screen*)(new GameplayScreen(this->width, this->height)) : (Screen*)(new CreditsScreen(this->width, this->height));
-            current->changeCurrentScreen(nextScreen);
+            if (nextScreen->getType() == ScreenType::Gameplay) GameStatus::getInstance().reset();
+            GameStatus::getInstance().changeCurrentScreen(nextScreen);
         }
     }
 }
 
-void TitleScreen::draw(GameStatus *status) {
+void TitleScreen::draw() {
 
     ClearBackground(RAYWHITE);
 

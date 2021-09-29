@@ -6,16 +6,16 @@ class AssetStore;
 class GameplayScreen : public Screen {
 public:
     GameplayScreen(int width, int height);
-    void updateGameStatus(GameStatus *current);
-    void draw(GameStatus *current);
+    void updateGameStatus();
+    void draw();
 
 private:
+    void updateStarshipTexture();
+    void updateBackgroundTexture();
     void drawBackground();
-    void drawStarship(GameStatus *status);
-    void drawForeground(GameStatus *status);
+    void drawStarship();
+    void drawForeground();
     
-    int currentRollFrame;
-    int currentPitchFrame;
     Rectangle currentFrameRec;
     Rectangle currentBackgroundRect;
 };

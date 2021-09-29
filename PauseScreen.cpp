@@ -9,18 +9,18 @@ PauseScreen::PauseScreen(int width, int height) : Screen(ScreenType::Pause, widt
     this->currentSelectedOption = Option::Continue;
 }
 
-void PauseScreen::updateGameStatus(GameStatus *current) {
+void PauseScreen::updateGameStatus() {
     const int selectedOption = static_cast<int>(this->currentSelectedOption);
     const int optionNum = static_cast<int>(Option::End);
     if (IsKeyPressed(KEY_DOWN)) this->currentSelectedOption = static_cast<Option>((selectedOption + 1) % optionNum);
     else if (IsKeyPressed(KEY_UP)) this->currentSelectedOption = static_cast<Option>(abs((selectedOption - 1) % optionNum));
     else if (IsKeyPressed(KEY_ENTER)) {
         Screen *nextScreen = this->currentSelectedOption == Option::Continue ? (Screen *)(new GameplayScreen(this->width, this->height)) : (Screen *)(new TitleScreen(this->width, this->height, false));
-        current->changeCurrentScreen(nextScreen);
+        GameStatus::getInstance().changeCurrentScreen(nextScreen);
     }
 }
 
-void PauseScreen::draw(GameStatus *status) {
+void PauseScreen::draw() {
 
     ClearBackground(RAYWHITE);
     DrawText("Pause Screen", 190, 330, 20, LIGHTGRAY);

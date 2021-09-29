@@ -18,7 +18,7 @@ EndingScreen::EndingScreen(int width, int height) : Screen(ScreenType::Pause, wi
     this->currentSelectedOption = Option::NextRun;
 }
 
-void EndingScreen::updateGameStatus(GameStatus *current) {
+void EndingScreen::updateGameStatus() {
     if (this->currentFrame >= TotalFramesNum) {
         const int selectedOption = static_cast<int>(this->currentSelectedOption);
         const int optionNum = static_cast<int>(Option::End);
@@ -26,12 +26,12 @@ void EndingScreen::updateGameStatus(GameStatus *current) {
         else if (IsKeyPressed(KEY_UP)) this->currentSelectedOption = static_cast<Option>(abs((selectedOption - 1) % optionNum));
         else if (IsKeyPressed(KEY_ENTER)) {
             Screen *nextScreen = this->currentSelectedOption == Option::NextRun ? (Screen *)(new GameplayScreen(this->width, this->height)) : (Screen *)(new TitleScreen(this->width, this->height, false));
-            current->changeCurrentScreen(nextScreen);
+            GameStatus::getInstance().changeCurrentScreen(nextScreen);
         }
     }
 }
 
-void EndingScreen::draw(GameStatus *current) {
+void EndingScreen::draw() {
     ClearBackground(BLACK);
 
     if (this->currentFrame < TotalFramesNum) {

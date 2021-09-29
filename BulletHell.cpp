@@ -16,18 +16,16 @@ int main(void) {
     InitWindow(ScreenWidth, ScreenHeight, "Bullet Hell");
     SetTargetFPS(60);
 
-    AssetStore& assets = AssetStore::getInstance();
-    GameStatus *status = new GameStatus(new GameplayScreen(ScreenWidth, ScreenHeight));
+    GameStatus::getInstance().setInitialScreen(new GameplayScreen(ScreenWidth, ScreenHeight));
 
     while (!WindowShouldClose()) {
-        status->update();
+        GameStatus::getInstance().update();
 
         BeginDrawing();
-        status->getCurrentScreen()->draw(status);
+        GameStatus::getInstance().getCurrentScreen()->draw();
         EndDrawing();
     }
 
-    delete status;
     CloseWindow();
 
     return 0;

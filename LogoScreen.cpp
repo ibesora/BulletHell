@@ -13,13 +13,13 @@ LogoScreen::LogoScreen(int width, int height) : Screen(ScreenType::Logo, width, 
     this->currentFrame = 0;
 }
 
-void LogoScreen::updateGameStatus(GameStatus *current) {
+void LogoScreen::updateGameStatus() {
     if (this->currentFrame > TotalFramesNum) {
-        current->changeCurrentScreen(new TitleScreen(this->width, this->height));
+        GameStatus::getInstance().changeCurrentScreen(new TitleScreen(this->width, this->height));
     }
 }
 
-void LogoScreen::draw(GameStatus *status) {
+void LogoScreen::draw() {
     currentFrame++;
     ClearBackground(BLACK);
     Animations::FadeText("Logo Screen", 190, 200, 20, LIGHTGRAY, currentFrame, FadeInFramesNum, VisibleFramesNum, FadeOutFramesNum);

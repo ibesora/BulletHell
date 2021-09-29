@@ -1,8 +1,6 @@
 #pragma once
 enum class ScreenType { Logo, Title, Pause, Gameplay, Ending, Credits };
 
-class GameStatus;
-
 class Screen {
 public:
     Screen(ScreenType type, int width, int height) {
@@ -15,8 +13,8 @@ public:
     int getWidth() { return this->width; }
     int getHeight() { return this->height; }
 
-    virtual void updateGameStatus(GameStatus *) {};
-    virtual void draw(GameStatus*) = 0;
+    virtual void updateGameStatus() {};
+    virtual void draw() = 0;
 
 protected:
     ScreenType type;

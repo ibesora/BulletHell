@@ -7,11 +7,16 @@ class AssetStore;
 
 class GameStatus {
 public:
-    GameStatus(Screen *initialScreen);
-    void reset(Screen *initialScreen);
+    GameStatus(GameStatus &other) = delete;
+    void operator=(const GameStatus &) = delete;
+    static GameStatus &getInstance();
+    void setInitialScreen(Screen *initialScreen);
+    void reset();
     Screen *getCurrentScreen();
     void update();
-    void checkBarrelRollSequences();
+    void updateInputs();
+    void updateStarship();
+    void updateBackground();
     void updateClouds();
     void updateMovementFlags(bool goingRight, bool goingLeft, bool goingUp, bool goingDown);
     void setIsRightBarrelRolling(bool);
@@ -20,6 +25,9 @@ public:
     void changeCurrentScreen(Screen *nextScreen);
     Vector2 getCurrentPosition();
     Vector2 getCurrentScreenPosition();
+    Vector2 getBackgroundPosition();
+    int getCurrentRollFrame();
+    int getCurrentPitchFrame();
     bool isPlayerGoingRight();
     bool isPlayerGoingLeft();
     bool isPlayerGoingUp();
@@ -27,11 +35,12 @@ public:
     bool isPlayerBarrelRolling();
     bool isPlayerBarrelRollingRight();
     bool isPlayerBarrelRollingLeft();
-    InputSequence *getInputSequence();
     int getCloudsNumber();
     int getCloudYPosition(int index);
-    void updateInputSequence();
     ~GameStatus();
+
+protected:
+    GameStatus();
 
 private:
     struct CloudInfo {
@@ -48,10 +57,10 @@ private:
     bool isGoingDown;
     bool isRightBarrelRolling;
     bool isLeftBarrelRolling;
+    int currentRollFrame;
+    int currentPitchFrame;
     Screen *currentScreen;
     Vector2 currentPosition;
-    InputSequence *inputSequence;
-    std::vector<InputSequence::Input> barrelRollRightKeySequence;
-    std::vector<InputSequence::Input> barrelRollLeftKeySequence;
+    Vector2 backgroundPosition;
     std::vector<CloudInfo> cloudPositions;
 };

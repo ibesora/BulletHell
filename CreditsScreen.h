@@ -4,5 +4,5 @@
 class CreditsScreen : public Screen {
 public:
     CreditsScreen(int width, int height);
-    void draw(GameStatus *current);
+    void draw();
 };
