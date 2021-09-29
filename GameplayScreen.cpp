@@ -33,43 +33,29 @@ void GameplayScreen::updateStarshipTexture() {
     const Texture2D starshipPitchTexture = AssetStore::getInstance().getStarshipPitchTexture();
     const Texture2D starshipRollTexture = AssetStore::getInstance().getStarshipRollTexture();
 
-    if (InputHandler::getInstance().isKeyDown(KEY_UP)) {
-        this->currentFrameRec.x = (float)starshipPitchTexture.width * 60 - GameStatus::getInstance().getCurrentPitchFrame() * (float)starshipPitchTexture.width / 60;
-    }
-    else if (InputHandler::getInstance().isKeyUp(KEY_UP) && GameStatus::getInstance().isPlayerGoingUp() && isPitchNotCentered) {
+    // User is pressing up or pitch animation up is running
+    if (InputHandler::getInstance().isKeyDown(KEY_UP)
+        || (InputHandler::getInstance().isKeyUp(KEY_UP) && GameStatus::getInstance().isPlayerGoingUp() && isPitchNotCentered)) {
         this->currentFrameRec.x = (float)starshipPitchTexture.width * 60 - GameStatus::getInstance().getCurrentPitchFrame() * (float)starshipPitchTexture.width / 60;
     }
 
-    if (InputHandler::getInstance().isKeyDown(KEY_DOWN)) {
-        this->currentFrameRec.x = GameStatus::getInstance().getCurrentPitchFrame() * (float)starshipPitchTexture.width / 60;
-    }
-    else if (InputHandler::getInstance().isKeyUp(KEY_DOWN) && GameStatus::getInstance().isPlayerGoingDown() && isPitchNotCentered) {
+    // User is pressing down or pitch animation down is running
+    if (InputHandler::getInstance().isKeyDown(KEY_DOWN)
+        || (InputHandler::getInstance().isKeyUp(KEY_DOWN) && GameStatus::getInstance().isPlayerGoingDown() && isPitchNotCentered)) {
         this->currentFrameRec.x = GameStatus::getInstance().getCurrentPitchFrame() * (float)starshipPitchTexture.width / 60;
     }
 
-    if (GameStatus::getInstance().isPlayerBarrelRollingRight()) {
+    // User is pressing right, roll animation right is running or right barrel roll animation is running
+    if (GameStatus::getInstance().isPlayerBarrelRollingRight()
+        || (InputHandler::getInstance().isKeyDown(KEY_RIGHT))
+        || (InputHandler::getInstance().isKeyUp(KEY_RIGHT) && GameStatus::getInstance().isPlayerGoingRight() && !GameStatus::getInstance().isPlayerBarrelRolling() && isRollNotCentered)) {
         this->currentFrameRec.x = GameStatus::getInstance().getCurrentRollFrame() * (float)starshipRollTexture.width / 60;
     }
 
-    if (InputHandler::getInstance().isKeyDown(KEY_RIGHT)) {
-        if (!GameStatus::getInstance().isPlayerBarrelRolling()) {
-            this->currentFrameRec.x = GameStatus::getInstance().getCurrentRollFrame() * (float)starshipRollTexture.width / 60;
-        }
-    }
-    else if (InputHandler::getInstance().isKeyUp(KEY_RIGHT) && GameStatus::getInstance().isPlayerGoingRight() && !GameStatus::getInstance().isPlayerBarrelRolling() && isRollNotCentered) {
-        this->currentFrameRec.x = GameStatus::getInstance().getCurrentRollFrame() * (float)starshipRollTexture.width / 60;
-    }
-
-    if (GameStatus::getInstance().isPlayerBarrelRollingLeft()) {
-        this->currentFrameRec.x = (float)starshipRollTexture.width * 60 - GameStatus::getInstance().getCurrentRollFrame() * (float)starshipRollTexture.width / 60;
-    }
-
-    if (InputHandler::getInstance().isKeyDown(KEY_LEFT)) {
-        if (!GameStatus::getInstance().isPlayerBarrelRolling()) {
-            this->currentFrameRec.x = (float)starshipRollTexture.width * 60 - GameStatus::getInstance().getCurrentRollFrame() * (float)starshipRollTexture.width / 60;
-        }
-    }
-    else if (InputHandler::getInstance().isKeyUp(KEY_LEFT) && GameStatus::getInstance().isPlayerGoingLeft() && !GameStatus::getInstance().isPlayerBarrelRolling() && isRollNotCentered) {
+    // User is pressing left, roll animation left is running or left barrel roll animation is running
+    if (GameStatus::getInstance().isPlayerBarrelRollingLeft()
+        || (InputHandler::getInstance().isKeyDown(KEY_LEFT))
+        || (InputHandler::getInstance().isKeyUp(KEY_LEFT) && GameStatus::getInstance().isPlayerGoingLeft() && !GameStatus::getInstance().isPlayerBarrelRolling() && isRollNotCentered)) {
         this->currentFrameRec.x = (float)starshipRollTexture.width * 60 - GameStatus::getInstance().getCurrentRollFrame() * (float)starshipRollTexture.width / 60;
     }
 }
