@@ -151,26 +151,33 @@
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="AssetStore.cpp" />
     <ClCompile Include="BulletHell.cpp" />
+    <ClCompile Include="CircleBulletPattern.cpp" />
     <ClCompile Include="CreditsScreen.cpp" />
     <ClCompile Include="EndingScreen.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameplayScreen.cpp" />
     <ClCompile Include="GameStatus.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="LogoScreen.cpp" />
     <ClCompile Include="PauseScreen.cpp" />
     <ClCompile Include="InputSequence.cpp" />
+    <ClCompile Include="SpiralBulletPattern.cpp" />
     <ClCompile Include="TitleScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AssetStore.h" />
+    <ClInclude Include="BulletPattern.h" />
+    <ClInclude Include="CircleBulletPattern.h" />
     <ClInclude Include="CreditsScreen.h" />
     <ClInclude Include="EndingScreen.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameplayScreen.h" />
     <ClInclude Include="GameStatus.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="InputSequence.h" />
     <ClInclude Include="PauseScreen.h" />
+    <ClInclude Include="SpiralBulletPattern.h" />
     <ClInclude Include="TitleScreen.h" />
     <ClInclude Include="LogoScreen.h" />
     <ClInclude Include="Screen.h" />

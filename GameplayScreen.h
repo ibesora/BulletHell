@@ -1,5 +1,7 @@
 #pragma once
 #include "Screen.h"
+#include "GameStatus.h";
+#include <vector>
 
 class AssetStore;
 
@@ -17,6 +19,7 @@ private:
     void drawForeground();
     void drawBullets();
     void drawEnemies();
+    void drawEnemyBullets();
     
     Rectangle currentFrameRec;
     Rectangle currentBackgroundRect;

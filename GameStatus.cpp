@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include "AssetStore.h"
 #include "InputHandler.h"
+#include "Enemy.h";
 #include <algorithm>
 
 const int XSpeed = 20;
@@ -27,11 +28,10 @@ GameStatus::GameStatus() {
     this->isGoingDown = false;
     this->isRightBarrelRolling = false;
     this->isLeftBarrelRolling = false;
-    this->currentPosition = { 0.0f, 0.0f };
-    this->currentScreen = nullptr;
     this->currentRollFrame = 0;
     this->currentPitchFrame = 0;
-    this->currentBulletFrame = 0;
+    this->currentPosition = { 0.0f, 0.0f };
+    this->enemy = nullptr;
 }
 
 GameStatus &GameStatus::getInstance() {
@@ -55,8 +55,10 @@ void GameStatus::reset() {
     this->currentRollFrame = 0;
     this->currentPitchFrame = 0;
     this->currentPosition = { (float)this->currentScreen->getWidth() / 2 - StarshipWidthInPx / 2, (float)this->currentScreen->getHeight() - StarshipHeightInPx };
+    this->enemy = new Enemy(this->currentScreen->getWidth() - (float)AssetStore::getInstance().getMainEnemyTexture().width / 2, -50.0f);
     this->cloudPositions.clear();
     this->bulletPositions.clear();
+    this->enemy->getBulletPositions().clear();
     InputHandler::getInstance().reset();
 }
 
@@ -182,7 +184,7 @@ void GameStatus::updateStarship() {
 }
 
 void GameStatus::updateEnemies() {
-
+    this->enemy->update();
 }
 
 void GameStatus::createBullet() {
@@ -256,6 +258,10 @@ Vector2 GameStatus::getCurrentPosition() {
     return this->currentPosition;
 }
 
+Vector2 GameStatus::getEnemyPosition() {
+    return this->enemy->getPosition();
+}
+
 Vector2 GameStatus::getCurrentScreenPosition() {
     // If X position is less than half the screen width, we set that as X position
     // If it's in between half the screen width and BacgroundWidthInPx - halfWidth we set the X as the center screen
@@ -289,7 +295,10 @@ int GameStatus::getCloudYPosition(int index) { return this->cloudPositions[index
 
 int GameStatus::getBulletsNumber() { return this->bulletPositions.size(); }
 GameStatus::BulletInfo GameStatus::getBullet(int index) { return this->bulletPositions[index]; }
+int GameStatus::getEnemyBulletsNumber() { return this->enemy->getBulletPositions().size(); }
+GameStatus::BulletInfo GameStatus::getEnemyBullet(int index) { return this->enemy->getBulletPositions()[index]; }
 
 GameStatus::~GameStatus() {
     delete this->currentScreen;
+    delete this->enemy;
 }

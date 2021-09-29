@@ -20,10 +20,8 @@ void GameplayScreen::updateGameStatus() {
         GameStatus::getInstance().changeCurrentScreen(new PauseScreen(this->width, this->height));
     }
     else {
-
         this->updateStarshipTexture();
         this->updateBackgroundTexture();
-
     }
 }
 
@@ -73,6 +71,7 @@ void GameplayScreen::draw() {
     this->drawEnemies();
     this->drawStarship();
     this->drawBullets();
+    this->drawEnemyBullets();
     this->drawForeground();
 
 }
@@ -108,6 +107,15 @@ void GameplayScreen::drawBullets() {
 
 void GameplayScreen::drawEnemies() {
     const Rectangle rect = { 0.0f, 0.0f, (float)AssetStore::getInstance().getMainEnemyTexture().width, (float)AssetStore::getInstance().getMainEnemyTexture().height };
-    const Vector2 position = { 560.0f - GameStatus::getInstance().getBackgroundPosition().x, -250.0f };
+    const Vector2 absoluteEnemyPosition = GameStatus::getInstance().getEnemyPosition();
+    Vector2 position = { absoluteEnemyPosition.x - GameStatus::getInstance().getBackgroundPosition().x, absoluteEnemyPosition.y};
     DrawTextureRec(AssetStore::getInstance().getMainEnemyTexture(), rect, position, WHITE);
+}
+
+void GameplayScreen::drawEnemyBullets() {
+    for (int i = 0; i < GameStatus::getInstance().getEnemyBulletsNumber(); ++i) {
+        GameStatus::BulletInfo bullet = GameStatus::getInstance().getEnemyBullet(i);
+        DrawCircleGradient((int)bullet.position.x - GameStatus::getInstance().getBackgroundPosition().x, (int)bullet.position.y, BulletRadius, BLUE, YELLOW);
+    }
+
 }
