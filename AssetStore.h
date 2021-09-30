@@ -11,6 +11,7 @@ public:
     Texture2D getBackgroundTexture() { return this->backgroundTexture; }
     Texture2D getForegroundTexture() { return this->foregroundTexture; }
     Texture2D getMainEnemyTexture() { return this->mainEnemyTexture; }
+    Texture2D getPowerUpTexture() { return this->powerUpTexture; }
 protected:
     AssetStore();
     Texture2D starshipRollTexture;
@@ -18,4 +19,5 @@ protected:
     Texture2D backgroundTexture;
     Texture2D foregroundTexture;
     Texture2D mainEnemyTexture;
+    Texture2D powerUpTexture;
 };

@@ -6,6 +6,7 @@
 #include "GameStatus.h"
 #include "InputHandler.h"
 #include "AssetStore.h"
+#include "PowerUp.h"
 
 const int StarshipWidthInPx = 256;
 const int BackgroundWidthInPx = 1920;
@@ -71,6 +72,7 @@ void GameplayScreen::draw() {
     ClearBackground(BLACK);
     this->drawBackground();
     this->drawEnemies();
+    this->drawPowerUps();
     this->drawStarship();
     this->drawBullets();
     this->drawEnemyBullets();
@@ -84,11 +86,21 @@ void GameplayScreen::drawBackground() {
 
 void GameplayScreen::drawStarship() {
     Player *player = GameStatus::getInstance().getPlayer();
+    Color col = GameStatus::getInstance().isPlayerBeingHit() ? RED : WHITE;
     if ((player->isGoingUp() || player->isGoingDown()) && !player->isGoingRight() && !player->isGoingLeft()) {
-        DrawTextureRec(AssetStore::getInstance().getStarshipPitchTexture(), this->currentFrameRec, GameStatus::getInstance().getPlayerScreenPosition(), WHITE);
+        DrawTextureRec(AssetStore::getInstance().getStarshipPitchTexture(), this->currentFrameRec, GameStatus::getInstance().getPlayerScreenPosition(), col);
     }
     else {
-        DrawTextureRec(AssetStore::getInstance().getStarshipRollTexture(), this->currentFrameRec, GameStatus::getInstance().getPlayerScreenPosition(), WHITE);
+        DrawTextureRec(AssetStore::getInstance().getStarshipRollTexture(), this->currentFrameRec, GameStatus::getInstance().getPlayerScreenPosition(), col);
+    }
+}
+
+void GameplayScreen::drawPowerUps() {
+    for (int i = 0; i < GameStatus::getInstance().getPowerUpsNumber(); ++i) {
+        PowerUp current = GameStatus::getInstance().getPowerUp(i);
+        const Rectangle rect = { current.isLighted() ? 64.0f : 0.0f, 0.0f, 64.0f, 64.0f };
+        Vector2 position = { current.getPosition().x - GameStatus::getInstance().getBackgroundPosition().x, current.getPosition().y };
+        DrawTextureRec(AssetStore::getInstance().getPowerUpTexture(), rect, position, WHITE);
     }
 }
 

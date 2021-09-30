@@ -6,6 +6,7 @@ class Screen;
 class AssetStore;
 class Enemy;
 class Player;
+class PowerUp;
 
 class GameStatus {
 public:
@@ -33,6 +34,9 @@ public:
     BulletInfo getBullet(int index);
     int getEnemyBulletsNumber();
     BulletInfo getEnemyBullet(int index);
+    int getPowerUpsNumber();
+    PowerUp getPowerUp(int index);
+    bool isPlayerBeingHit();
     bool isEnemyBeingHit();
     ~GameStatus();
 
@@ -44,6 +48,7 @@ protected:
     void updateEnemies();
     void updateBackground();
     void updateClouds();
+    void updatePowerUps();
 
 private:
     struct CloudInfo {
@@ -56,6 +61,7 @@ private:
     Screen *currentScreen;
     Vector2 backgroundPosition;
     std::vector<CloudInfo> cloudPositions;
+    std::vector<PowerUp> powerUps;
     Enemy *enemy;
     Player *player;
 };

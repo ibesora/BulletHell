@@ -1,16 +1,19 @@
 #include "GameStatus.h"
 #include "Screen.h"
+#include "EndingScreen.h"
 #include "raylib.h"
 #include "AssetStore.h"
 #include "InputHandler.h"
 #include "Player.h"
 #include "Enemy.h";
+#include "PowerUp.h"
 
 const int BackgroundSpeed = 5;
 const int BackgroundWidthInPx = 1920;
 const int CloudsMinSpeed = 5;
 const int CloudsMaxSpeed = 10;
 const float CloudProbability = 0.015f;
+const float PowerUpProbability = 0.005;
 const int StarshipWidthInPx = 256;
 const int StarshipHeightInPx = 256;
 
@@ -18,6 +21,8 @@ GameStatus::GameStatus() {
     this->isPlaying = false;
     this->enemy = nullptr;
     this->player = nullptr;
+    this->currentScreen = nullptr;
+    this->backgroundPosition = { 0.0f, 0.0f };
 }
 
 GameStatus &GameStatus::getInstance() {
@@ -43,6 +48,7 @@ void GameStatus::reset() {
     this->enemy = new Enemy(this->currentScreen->getWidth() - (float)AssetStore::getInstance().getMainEnemyTexture().width / 2, -50.0f);
     this->backgroundPosition = { 0.0f, 0.0f };
     this->cloudPositions.clear();
+    this->powerUps.clear();
     InputHandler::getInstance().reset();
 }
 
@@ -58,6 +64,8 @@ void GameStatus::update() {
         this->updateEnemies();
         this->updateBackground();
         this->updateClouds();
+        this->updatePowerUps();
+        if (this->player->isBeingHit()) this->changeCurrentScreen(new EndingScreen(this->currentScreen->getWidth(), this->currentScreen->getHeight()));
     }
 
     this->getCurrentScreen()->updateGameStatus();
@@ -112,6 +120,28 @@ void GameStatus::updateClouds() {
     }
 }
 
+void GameStatus::updatePowerUps() {
+    const float diceThrow = (float)std::rand() / (float)RAND_MAX;
+    const bool shouldWeAddAPowerUp = diceThrow < PowerUpProbability;
+    if (shouldWeAddAPowerUp) {
+        const float posX = (float)(std::rand() % (BackgroundWidthInPx - AssetStore::getInstance().getPowerUpTexture().width));
+        this->powerUps.push_back(PowerUp(posX, -AssetStore::getInstance().getPowerUpTexture().height));
+    }
+
+    // PowerUps position update
+    std::vector<PowerUp> aux;
+    for (int i = 0; i < this->powerUps.size(); ++i) {
+        this->powerUps[i].update();
+        if (!this->player->checkCollision(this->powerUps[i].getPosition())) {
+            aux.push_back(this->powerUps[i]);
+        }
+        else {
+            this->player->setPowerLevel(this->player->getPowerLevel() + 1);
+        }
+    }
+    this->powerUps = aux;
+}
+
 void GameStatus::changeCurrentScreen(Screen *nextScreen) {
     // TODO: Do some kind of transition between screens?
     delete this->currentScreen;
@@ -148,6 +178,9 @@ int GameStatus::getBulletsNumber() { return this->player->getBulletPositions().s
 GameStatus::BulletInfo GameStatus::getBullet(int index) { return this->player->getBulletPositions()[index]; }
 int GameStatus::getEnemyBulletsNumber() { return this->enemy->getBulletPositions().size(); }
 GameStatus::BulletInfo GameStatus::getEnemyBullet(int index) { return this->enemy->getBulletPositions()[index]; }
+int GameStatus::getPowerUpsNumber() { return this->powerUps.size(); }
+PowerUp GameStatus::getPowerUp(int index) { return this->powerUps[index]; }
+bool GameStatus::isPlayerBeingHit() { return this->player->isBeingHit(); }
 bool GameStatus::isEnemyBeingHit() { return this->enemy->isBeingHit(); }
 
 GameStatus::~GameStatus() {

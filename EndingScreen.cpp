@@ -26,6 +26,7 @@ void EndingScreen::updateGameStatus() {
         else if (IsKeyPressed(KEY_UP)) this->currentSelectedOption = static_cast<Option>(abs((selectedOption - 1) % optionNum));
         else if (IsKeyPressed(KEY_ENTER)) {
             Screen *nextScreen = this->currentSelectedOption == Option::NextRun ? (Screen *)(new GameplayScreen(this->width, this->height)) : (Screen *)(new TitleScreen(this->width, this->height, false));
+            GameStatus::getInstance().reset();
             GameStatus::getInstance().changeCurrentScreen(nextScreen);
         }
     }

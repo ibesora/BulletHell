@@ -24,6 +24,8 @@ public:
 	bool isBarrelRolling();
 	bool isBarrelRollingRight();
 	bool isBarrelRollingLeft();
+	void setPowerLevel(int);
+	int getPowerLevel();
 protected:
 	void updateStarship();
 	void updateBoundingTriangle();
@@ -45,4 +47,5 @@ protected:
 	int currentRollFrame;
 	int currentPitchFrame;
 	int currentBulletFrame;
+	int powerLevel;
 };

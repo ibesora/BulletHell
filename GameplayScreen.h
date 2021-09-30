@@ -15,6 +15,7 @@ private:
     void updateStarshipTexture();
     void updateBackgroundTexture();
     void drawBackground();
+    void drawPowerUps();
     void drawStarship();
     void drawForeground();
     void drawBullets();

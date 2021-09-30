@@ -13,6 +13,7 @@ const int StarshipWidthInPx = 256;
 const int StarshipHeightInPx = 256;
 const int BackgroundWidthInPx = 1920;
 const int ScreenHeight = 1280;
+const int MaxPowerLevel = 3;
 
 Player::Player(float x, float y) {
 	this->position = { x, y };
@@ -27,6 +28,7 @@ Player::Player(float x, float y) {
 	this->currentRollFrame = 0;
 	this->currentPitchFrame = 0;
 	this->currentBulletFrame = 0;
+    this->powerLevel = 1;
 }
 
 void Player::update(Enemy *enemy) {
@@ -142,10 +144,28 @@ void Player::updateStarship() {
 }
 
 void Player::createBullet() {
-    this->bulletPositions.push_back(GameStatus::BulletInfo({ 0.0f, (float)-BulletSpeed }, {
-        this->position.x + StarshipWidthInPx / 2,
-        this->position.y + 10
-        }));
+    // We create as many bullets as the player power level
+    // We also add an offset to the position depending on
+    // the power level to simulate a centered shot,
+    // two parallel shots or three
+    for (int i = 0; i < this->powerLevel; ++i) {
+        int offset = 0;
+        if (this->powerLevel == 1) offset = 0;
+        else if (this->powerLevel == 2) {
+            if (i == 0) offset = -10;
+            else offset = 10;
+        }
+        else if (this->powerLevel == 3) {
+            if (i == 0) offset = 0;
+            else if (i == 1) offset = -20;
+            else if (i == 2) offset = 20;
+        }
+                
+        this->bulletPositions.push_back(GameStatus::BulletInfo({ 0.0f, (float)-BulletSpeed }, {
+            this->position.x + StarshipWidthInPx / 2 + offset,
+            this->position.y + 10
+            }));
+    }
 }
 
 void Player::updateMovementFlags(bool goingRight, bool goingLeft, bool goingUp, bool goingDown) {
@@ -191,3 +211,6 @@ bool Player::checkCollision(Vector2 point) {
 
 void Player::setIsBeingHit(bool hit) { this->beingHit = hit; }
 bool Player::isBeingHit() { return this->beingHit; }
+
+void Player::setPowerLevel(int level) { this->powerLevel = level > MaxPowerLevel ? this->powerLevel : level; }
+int Player::getPowerLevel() { return this->powerLevel; }

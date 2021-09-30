@@ -5,6 +5,7 @@ AssetStore::AssetStore() {
     this->backgroundTexture = LoadTexture("assets/desert-background.png");
     this->foregroundTexture = LoadTexture("assets/clouds.png");
     this->mainEnemyTexture = LoadTexture("assets/enemy_big.png");
+    this->powerUpTexture = LoadTexture("assets/powerup.png");
 }
 
 AssetStore& AssetStore::getInstance() {
