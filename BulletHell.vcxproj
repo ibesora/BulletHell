@@ -161,6 +161,7 @@
     <ClCompile Include="LogoScreen.cpp" />
     <ClCompile Include="PauseScreen.cpp" />
     <ClCompile Include="InputSequence.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SpiralBulletPattern.cpp" />
     <ClCompile Include="TitleScreen.cpp" />
   </ItemGroup>
@@ -177,6 +178,7 @@
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="InputSequence.h" />
     <ClInclude Include="PauseScreen.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SpiralBulletPattern.h" />
     <ClInclude Include="TitleScreen.h" />
     <ClInclude Include="LogoScreen.h" />

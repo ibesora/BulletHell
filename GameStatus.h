@@ -5,6 +5,7 @@
 class Screen;
 class AssetStore;
 class Enemy;
+class Player;
 
 class GameStatus {
 public:
@@ -22,19 +23,10 @@ public:
     Screen *getCurrentScreen();
     void update();
     void changeCurrentScreen(Screen *nextScreen);
-    Vector2 getPlayerPosition();
+    Player* getPlayer();
     Vector2 getEnemyPosition();
     Vector2 getPlayerScreenPosition();
     Vector2 getBackgroundPosition();
-    int getCurrentRollFrame();
-    int getCurrentPitchFrame();
-    bool isPlayerGoingRight();
-    bool isPlayerGoingLeft();
-    bool isPlayerGoingUp();
-    bool isPlayerGoingDown();
-    bool isPlayerBarrelRolling();
-    bool isPlayerBarrelRollingRight();
-    bool isPlayerBarrelRollingLeft();
     int getCloudsNumber();
     int getCloudYPosition(int index);
     int getBulletsNumber();
@@ -52,10 +44,6 @@ protected:
     void updateEnemies();
     void updateBackground();
     void updateClouds();
-    void updateMovementFlags(bool goingRight, bool goingLeft, bool goingUp, bool goingDown);
-    void setIsRightBarrelRolling(bool);
-    void setIsLeftBarrelRolling(bool);
-    void updatePosition(float x, float y);
 
 private:
     struct CloudInfo {
@@ -64,22 +52,10 @@ private:
         CloudInfo(int speed, int y) : speed(speed), y(y) {}
     };
 
-    void createBullet();
-
     bool isPlaying;
-    bool isGoingRight;
-    bool isGoingLeft;
-    bool isGoingUp;
-    bool isGoingDown;
-    bool isRightBarrelRolling;
-    bool isLeftBarrelRolling;
-    int currentRollFrame;
-    int currentPitchFrame;
-    int currentBulletFrame;
     Screen *currentScreen;
-    Vector2 currentPosition;
     Vector2 backgroundPosition;
     std::vector<CloudInfo> cloudPositions;
-    std::vector<BulletInfo> bulletPositions;
     Enemy *enemy;
+    Player *player;
 };

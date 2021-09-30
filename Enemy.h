@@ -3,11 +3,12 @@
 #include "GameStatus.h"
 
 class BulletPattern;
+class Player;
 
 class Enemy {
 public:
 	Enemy(float x, float y);
-	void update();
+	void update(Player *player);
 	Vector2 getPosition();
 	std::vector<GameStatus::BulletInfo> getBulletPositions();
 	bool checkCollision(Vector2 point);
@@ -18,7 +19,8 @@ protected:
 	void updatePosition();
 	void updateBoundingTriangle();
 	void updateBulletPosition();
-	void updateBullets();
+	void updateBullets(Player *player);
+	void checkBulletCollisions(Player *player);
 	void changeBulletPatternThrow();
 	void createBulletIfNeeded();
 	Vector2 getRightTurretPosition();

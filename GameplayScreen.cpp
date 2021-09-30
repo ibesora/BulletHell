@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include "raylib.h"
+#include "Player.h"
 #include "GameplayScreen.h"
 #include "PauseScreen.h"
 #include "GameStatus.h"
@@ -27,35 +28,36 @@ void GameplayScreen::updateGameStatus() {
 
 void GameplayScreen::updateStarshipTexture() {
 
-    bool isRollNotCentered = GameStatus::getInstance().getCurrentRollFrame() != 0;
-    bool isPitchNotCentered = GameStatus::getInstance().getCurrentPitchFrame() != 0;
+    Player *player = GameStatus::getInstance().getPlayer();
+    bool isRollNotCentered = player->getCurrentRollFrame() != 0;
+    bool isPitchNotCentered = player->getCurrentPitchFrame() != 0;
     const Texture2D starshipPitchTexture = AssetStore::getInstance().getStarshipPitchTexture();
     const Texture2D starshipRollTexture = AssetStore::getInstance().getStarshipRollTexture();
 
     // User is pressing up or pitch animation up is running
     if (InputHandler::getInstance().isKeyDown(KEY_UP)
-        || (InputHandler::getInstance().isKeyUp(KEY_UP) && GameStatus::getInstance().isPlayerGoingUp() && isPitchNotCentered)) {
-        this->currentFrameRec.x = (float)starshipPitchTexture.width * 60 - GameStatus::getInstance().getCurrentPitchFrame() * (float)starshipPitchTexture.width / 60;
+        || (InputHandler::getInstance().isKeyUp(KEY_UP) && player->isGoingUp() && isPitchNotCentered)) {
+        this->currentFrameRec.x = (float)starshipPitchTexture.width * 60 - player->getCurrentPitchFrame() * (float)starshipPitchTexture.width / 60;
     }
 
     // User is pressing down or pitch animation down is running
     if (InputHandler::getInstance().isKeyDown(KEY_DOWN)
-        || (InputHandler::getInstance().isKeyUp(KEY_DOWN) && GameStatus::getInstance().isPlayerGoingDown() && isPitchNotCentered)) {
-        this->currentFrameRec.x = GameStatus::getInstance().getCurrentPitchFrame() * (float)starshipPitchTexture.width / 60;
+        || (InputHandler::getInstance().isKeyUp(KEY_DOWN) && player->isGoingDown() && isPitchNotCentered)) {
+        this->currentFrameRec.x = player->getCurrentPitchFrame() * (float)starshipPitchTexture.width / 60;
     }
 
     // User is pressing right, roll animation right is running or right barrel roll animation is running
-    if (GameStatus::getInstance().isPlayerBarrelRollingRight()
+    if (player->isBarrelRollingRight()
         || (InputHandler::getInstance().isKeyDown(KEY_RIGHT))
-        || (InputHandler::getInstance().isKeyUp(KEY_RIGHT) && GameStatus::getInstance().isPlayerGoingRight() && !GameStatus::getInstance().isPlayerBarrelRolling() && isRollNotCentered)) {
-        this->currentFrameRec.x = GameStatus::getInstance().getCurrentRollFrame() * (float)starshipRollTexture.width / 60;
+        || (InputHandler::getInstance().isKeyUp(KEY_RIGHT) && player->isGoingRight() && !player->isBarrelRolling() && isRollNotCentered)) {
+        this->currentFrameRec.x = player->getCurrentRollFrame() * (float)starshipRollTexture.width / 60;
     }
 
     // User is pressing left, roll animation left is running or left barrel roll animation is running
-    if (GameStatus::getInstance().isPlayerBarrelRollingLeft()
+    if (player->isBarrelRollingLeft()
         || (InputHandler::getInstance().isKeyDown(KEY_LEFT))
-        || (InputHandler::getInstance().isKeyUp(KEY_LEFT) && GameStatus::getInstance().isPlayerGoingLeft() && !GameStatus::getInstance().isPlayerBarrelRolling() && isRollNotCentered)) {
-        this->currentFrameRec.x = (float)starshipRollTexture.width * 60 - GameStatus::getInstance().getCurrentRollFrame() * (float)starshipRollTexture.width / 60;
+        || (InputHandler::getInstance().isKeyUp(KEY_LEFT) && player->isGoingLeft() && !player->isBarrelRolling() && isRollNotCentered)) {
+        this->currentFrameRec.x = (float)starshipRollTexture.width * 60 - player->getCurrentRollFrame() * (float)starshipRollTexture.width / 60;
     }
 }
 
@@ -81,20 +83,13 @@ void GameplayScreen::drawBackground() {
 }
 
 void GameplayScreen::drawStarship() {
-    if ((GameStatus::getInstance().isPlayerGoingUp() || GameStatus::getInstance().isPlayerGoingDown()) && !GameStatus::getInstance().isPlayerGoingRight() && !GameStatus::getInstance().isPlayerGoingLeft()) {
+    Player *player = GameStatus::getInstance().getPlayer();
+    if ((player->isGoingUp() || player->isGoingDown()) && !player->isGoingRight() && !player->isGoingLeft()) {
         DrawTextureRec(AssetStore::getInstance().getStarshipPitchTexture(), this->currentFrameRec, GameStatus::getInstance().getPlayerScreenPosition(), WHITE);
     }
     else {
         DrawTextureRec(AssetStore::getInstance().getStarshipRollTexture(), this->currentFrameRec, GameStatus::getInstance().getPlayerScreenPosition(), WHITE);
     }
-    const Vector2 pos = GameStatus::getInstance().getPlayerScreenPosition();
-    const int starshipWidth = 256;
-    const int starshipHeight = 256;
-    DrawTriangle(
-        { pos.x + starshipWidth / 2, pos.y + 10},
-        { pos.x + 30, pos.y + starshipHeight -60 },
-        { pos.x + starshipWidth -30, pos.y + starshipHeight -60 },
-        Fade(VIOLET, 0.7f));
 }
 
 void GameplayScreen::drawForeground() {

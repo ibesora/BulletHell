@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include "Player.h"
 #include "AssetStore.h"
 #include "CircleBulletPattern.h"
 #include "SpiralBulletPattern.h"
@@ -22,9 +23,9 @@ Enemy::Enemy(float x, float y) {
 	this->isLeftTurretActive = false;
 }
 
-void Enemy::update() {
+void Enemy::update(Player *player) {
 	this->updatePosition();
-	this->updateBullets();
+	this->updateBullets(player);
 }
 
 void Enemy::updatePosition() {
@@ -41,12 +42,13 @@ void Enemy::updateBoundingTriangle() {
 	this->boundingTriangle[2] = { this->position.x + 128, this->position.y + 256 - 30 };
 }
 
-void Enemy::updateBullets() {
+void Enemy::updateBullets(Player* player) {
 	const int enemyPositionCenter = GameStatus::getInstance().getEnemyPosition().x + AssetStore::getInstance().getMainEnemyTexture().width / 2;
 	this->currentFrame++;
 	this->updateBulletPosition();
 	this->changeBulletPatternThrow();
 	this->createBulletIfNeeded();
+	this->checkBulletCollisions(player);
 }
 
 void Enemy::updateBulletPosition() {
@@ -91,6 +93,26 @@ void Enemy::createBulletIfNeeded() {
 		this->currentBulletPattern->createBullet(this->currentFrame, this->isRightTurretActive, this->isLeftTurretActive,
 			this->getRightTurretPosition(), this->getLeftTurretPosition(), &this->bulletPositions);
 	}
+}
+
+void Enemy::checkBulletCollisions(Player *player) {
+	std::vector<GameStatus::BulletInfo> aux;
+	bool isEnemyBeingHit = false;
+	for (int i = 0; i < this->bulletPositions.size(); ++i) {
+		GameStatus::BulletInfo current = this->bulletPositions[i];
+		this->bulletPositions[i].position = {
+			current.position.x + current.speed.x,
+			current.position.y + current.speed.y
+		};
+		if (!player->checkCollision(this->bulletPositions[i].position)) {
+			aux.push_back(this->bulletPositions[i]);
+		}
+		else {
+			isEnemyBeingHit = true;
+		}
+	}
+	this->bulletPositions = aux;
+	player->setIsBeingHit(isEnemyBeingHit);
 }
 
 Vector2 Enemy::getPosition() {
