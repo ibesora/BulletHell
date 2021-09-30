@@ -16,6 +16,7 @@ const int TotalFramesNum = FadeInFramesNum + VisibleFramesNum + FadeOutFramesNum
 EndingScreen::EndingScreen(int width, int height) : Screen(ScreenType::Pause, width, height) {
     this->currentFrame = 0;
     this->currentSelectedOption = Option::NextRun;
+    PlaySound(AssetStore::getInstance().getPlayerDiedSound());
 }
 
 void EndingScreen::updateGameStatus() {

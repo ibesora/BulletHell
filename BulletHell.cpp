@@ -16,15 +16,23 @@ int main(void) {
     InitWindow(ScreenWidth, ScreenHeight, "Bullet Hell");
     SetTargetFPS(60);
 
+    InitAudioDevice();
+    AssetStore::getInstance().loadMusic();
+
     GameStatus::getInstance().setInitialScreen(new GameplayScreen(ScreenWidth, ScreenHeight));
 
     while (!WindowShouldClose()) {
+        UpdateMusicStream(GameStatus::getInstance().getCurrentSong());
         GameStatus::getInstance().update();
 
         BeginDrawing();
         GameStatus::getInstance().getCurrentScreen()->draw();
         EndDrawing();
     }
+
+    AssetStore::getInstance().unloadMusic();
+   
+    CloseAudioDevice();
 
     CloseWindow();
 

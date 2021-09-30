@@ -14,6 +14,8 @@ const int FramesBetweenTypeChangeChance = 1000;
 const float ChangeBulletPatternProbability = 0.5;
 const int StartingLife = 1000;
 const int DamagePerBullet = 5;
+const int TimeToAppearInFrames = 60 * 23;
+const int AppearingAnimationTimeInFrames = 60;
 
 Enemy::Enemy(float x, float y) {
 	this->currentBulletPattern = new CircleBulletPattern();
@@ -21,14 +23,33 @@ Enemy::Enemy(float x, float y) {
 	this->position = { x, y };
 	this->updateBoundingTriangle();
 	this->currentFrame = 0;
+	this->framesFromStart = 0;
+	this->appeared = false;
+	this->appearingProgress = 0;
 	this->isRightTurretActive = true;
 	this->isLeftTurretActive = false;
 	this->life = StartingLife;
 }
 
 void Enemy::update(Player *player) {
-	this->updatePosition();
-	this->updateBullets(player);
+	if(!this->appeared) this->updateAppearingAnimation();
+	else {
+		this->updatePosition();
+		this->updateBullets(player);
+	}
+}
+
+void Enemy::updateAppearingAnimation() {
+	this->framesFromStart++;
+	if (this->framesFromStart >= TimeToAppearInFrames) {
+		if (this->framesFromStart - TimeToAppearInFrames > AppearingAnimationTimeInFrames) {
+			this->framesFromStart = 0;
+			this->appeared = true;
+		}
+		else {
+			this->appearingProgress = (float)(this->framesFromStart - TimeToAppearInFrames) / AppearingAnimationTimeInFrames;
+		}
+	}
 }
 
 void Enemy::updatePosition() {
@@ -137,6 +158,7 @@ std::vector<GameStatus::BulletInfo> Enemy::getBulletPositions() {
 }
 
 bool Enemy::checkCollision(Vector2 point) {
+	if (!this->appeared) return false;
 	return CheckCollisionPointTriangle(point, this->boundingTriangle[0], this->boundingTriangle[1], this->boundingTriangle[2]);
 }
 
@@ -152,6 +174,8 @@ bool Enemy::isBeingHit() {
 }
 
 int Enemy::getLife() { return this->life; }
+bool Enemy::hasAppeared() { return this->appeared; }
+float Enemy::getAppearingProgress() { return this->appearingProgress; }
 
 Enemy::~Enemy() {
 	delete this->currentBulletPattern;

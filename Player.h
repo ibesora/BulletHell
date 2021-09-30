@@ -26,6 +26,8 @@ public:
 	bool isBarrelRollingLeft();
 	void setPowerLevel(int);
 	int getPowerLevel();
+	int getLife();
+	void setGodMode(bool godModeActive);
 protected:
 	void updateStarship();
 	void updateBoundingTriangle();
@@ -48,4 +50,6 @@ protected:
 	int currentPitchFrame;
 	int currentBulletFrame;
 	int powerLevel;
+	int life;
+	bool godMode;
 };

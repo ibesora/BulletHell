@@ -67,7 +67,7 @@ void GameStatus::update() {
         this->updateBackground();
         this->updateClouds();
         this->updatePowerUps();
-        if (this->player->isBeingHit() && !GodMode) this->changeCurrentScreen(new EndingScreen(this->currentScreen->getWidth(), this->currentScreen->getHeight()));
+        if (this->player->getLife() == 0) this->changeCurrentScreen(new EndingScreen(this->currentScreen->getWidth(), this->currentScreen->getHeight()));
         if (this->enemy->getLife() == 0) this->changeCurrentScreen(new WinScreen(this->currentScreen->getWidth(), this->currentScreen->getHeight()));
     }
 
@@ -124,6 +124,7 @@ void GameStatus::updateClouds() {
 }
 
 void GameStatus::updatePowerUps() {
+    if (!GameStatus::getInstance().hasEnemyAppeared()) return;
     const float diceThrow = (float)std::rand() / (float)RAND_MAX;
     const bool shouldWeAddAPowerUp = diceThrow < PowerUpProbability && this->powerUps.size() < 2;
     if (shouldWeAddAPowerUp) {
@@ -135,10 +136,12 @@ void GameStatus::updatePowerUps() {
     std::vector<PowerUp> aux;
     for (int i = 0; i < this->powerUps.size(); ++i) {
         this->powerUps[i].update();
-        if (!this->player->checkCollision(this->powerUps[i].getPosition())) {
+        bool collides = this->player->checkCollision(this->powerUps[i].getPosition());
+        if (!collides && this->powerUps[i].getPosition().y < this->currentScreen->getHeight()) {
             aux.push_back(this->powerUps[i]);
         }
-        else {
+        else if(collides) {
+            PlaySound(AssetStore::getInstance().getPowerUpSound());
             this->player->setPowerLevel(this->player->getPowerLevel() + 1);
         }
     }
@@ -185,8 +188,19 @@ int GameStatus::getPowerUpsNumber() { return this->powerUps.size(); }
 PowerUp GameStatus::getPowerUp(int index) { return this->powerUps[index]; }
 bool GameStatus::isPlayerBeingHit() { return this->player->isBeingHit(); }
 bool GameStatus::isEnemyBeingHit() { return this->enemy->isBeingHit(); }
+int GameStatus::getEnemyLife() { return this->enemy->getLife(); }
+int GameStatus::getPlayerLife() { return this->player->getLife(); }
+
+Music GameStatus::getCurrentSong() {
+    if (this->currentScreen->getType() == ScreenType::Gameplay) return AssetStore::getInstance().getGameSong();
+    else return AssetStore::getInstance().getMenuSong();
+}
+
+bool GameStatus::hasEnemyAppeared() { return this->enemy->hasAppeared(); }
+float GameStatus::getEnemyAppearingAnimationProgress() { return this->enemy->getAppearingProgress(); }
 
 GameStatus::~GameStatus() {
     delete this->currentScreen;
+    delete this->player;
     delete this->enemy;
 }

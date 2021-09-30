@@ -7,14 +7,20 @@
 #include "InputHandler.h"
 #include "AssetStore.h"
 #include "PowerUp.h"
+#include "Animations.h"
 
 const int StarshipWidthInPx = 256;
 const int BackgroundWidthInPx = 1920;
 const int BulletRadius = 10;
+const int FadeInFramesNum = 60;
+const int VisibleFramesNum = 60;
+const int FadeOutFramesNum = 60;
+const int TotalTextAnimationFrames = FadeInFramesNum + VisibleFramesNum + FadeOutFramesNum;
 
 GameplayScreen::GameplayScreen(int width, int height) : Screen(ScreenType::Gameplay, width, height) {
     this->currentFrameRec = { 0.0f, 0.0f, (float)AssetStore::getInstance().getStarshipRollTexture().width / 60, (float)AssetStore::getInstance().getStarshipRollTexture().height };
     this->currentBackgroundRect = { 0.0f, 0.0f, (float)width, (float)height };
+    this->textAnimFrame = 0;
 }
 
 void GameplayScreen::updateGameStatus() {
@@ -77,6 +83,9 @@ void GameplayScreen::draw() {
     this->drawBullets();
     this->drawEnemyBullets();
     this->drawForeground();
+    this->drawEnemyLife();
+    this->drawPlayerLife();
+    this->drawText();
 
 }
 
@@ -124,7 +133,12 @@ void GameplayScreen::drawEnemies() {
     const Rectangle rect = { 0.0f, 0.0f, (float)AssetStore::getInstance().getMainEnemyTexture().width, (float)AssetStore::getInstance().getMainEnemyTexture().height };
     const Vector2 absoluteEnemyPosition = GameStatus::getInstance().getEnemyPosition();
     Vector2 position = { absoluteEnemyPosition.x - GameStatus::getInstance().getBackgroundPosition().x, absoluteEnemyPosition.y};
-    DrawTextureRec(AssetStore::getInstance().getMainEnemyTexture(), rect, position, GameStatus::getInstance().isEnemyBeingHit() ? RED : WHITE);
+    if (GameStatus::getInstance().hasEnemyAppeared()) {
+        DrawTextureRec(AssetStore::getInstance().getMainEnemyTexture(), rect, position, GameStatus::getInstance().isEnemyBeingHit() ? RED : WHITE);
+    }
+    else {
+        DrawTextureRec(AssetStore::getInstance().getMainEnemyTexture(), rect, position, Fade(WHITE, GameStatus::getInstance().getEnemyAppearingAnimationProgress()));
+    }
 }
 
 void GameplayScreen::drawEnemyBullets() {
@@ -132,5 +146,41 @@ void GameplayScreen::drawEnemyBullets() {
         GameStatus::BulletInfo bullet = GameStatus::getInstance().getEnemyBullet(i);
         DrawCircleGradient((int)bullet.position.x - GameStatus::getInstance().getBackgroundPosition().x, (int)bullet.position.y, BulletRadius, BLUE, YELLOW);
     }
+}
 
+void GameplayScreen::drawEnemyLife() {
+    if (GameStatus::getInstance().hasEnemyAppeared()) {
+        const Vector2 absoluteEnemyPosition = GameStatus::getInstance().getEnemyPosition();
+        const int enemyLife = GameStatus::getInstance().getEnemyLife();
+        const float greenLifeBarX = absoluteEnemyPosition.x - GameStatus::getInstance().getBackgroundPosition().x + StarshipWidthInPx / 2 - 50.0f;
+        const int lifeInPx = enemyLife / 10;
+        const float redLifeBarX = greenLifeBarX + lifeInPx;
+        const float lifeBarY = absoluteEnemyPosition.y + StarshipWidthInPx / 2 - 20.0f;
+        Vector2 positionGreen = { greenLifeBarX, lifeBarY };
+        Vector2 positionRed = { redLifeBarX, lifeBarY };
+        DrawRectangleV(positionGreen, { (float)lifeInPx, 20.0f }, GREEN);
+        DrawRectangleV(positionRed, { (float)100.0f - lifeInPx, 20.0f }, RED);
+    }
+}
+
+void GameplayScreen::drawPlayerLife() {
+    if (!GameStatus::getInstance().hasEnemyAppeared()) return;
+    const Vector2 position = GameStatus::getInstance().getPlayerScreenPosition();
+    const int playerLife = GameStatus::getInstance().getPlayerLife();
+    const float greenLifeBarX = position.x + StarshipWidthInPx / 2 - 50.0f;
+    const int lifeInPx = playerLife / 10;
+    const float redLifeBarX = greenLifeBarX + lifeInPx;
+    const float lifeBarY = position.y + StarshipWidthInPx / 2 + 50.0f;
+    Vector2 positionGreen = { greenLifeBarX, lifeBarY };
+    Vector2 positionRed = { redLifeBarX, lifeBarY };
+    DrawRectangleV(positionGreen, { (float)lifeInPx, 20.0f }, GREEN);
+    DrawRectangleV(positionRed, { (float)100.0f - lifeInPx, 20.0f }, RED);
+}
+
+void GameplayScreen::drawText() {
+    if (!GameStatus::getInstance().hasEnemyAppeared()) {
+        this->textAnimFrame++;
+        Animations::FadeText("Enemic a prop", 150, this->height / 2 - 50, 100, RED, this->textAnimFrame, FadeInFramesNum, VisibleFramesNum, FadeOutFramesNum);
+        if (this->textAnimFrame == TotalTextAnimationFrames) this->textAnimFrame = 0;
+    }
 }

@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "InputHandler.h"
+#include "AssetStore.h"
 #include <algorithm>
 
 const int XSpeed = 20;
@@ -14,6 +15,9 @@ const int StarshipHeightInPx = 256;
 const int BackgroundWidthInPx = 1920;
 const int ScreenHeight = 1280;
 const int MaxPowerLevel = 3;
+const int StartingLife = 1000;
+const int DamagePerBullet = 250;
+const int GodMode = false;
 
 Player::Player(float x, float y) {
 	this->position = { x, y };
@@ -29,6 +33,8 @@ Player::Player(float x, float y) {
 	this->currentPitchFrame = 0;
 	this->currentBulletFrame = 0;
     this->powerLevel = 1;
+    this->life = StartingLife;
+    this->godMode = GodMode;
 }
 
 void Player::update(Enemy *enemy) {
@@ -160,6 +166,8 @@ void Player::createBullet() {
             else if (i == 1) offset = -20;
             else if (i == 2) offset = 20;
         }
+
+        PlaySound(AssetStore::getInstance().getPlayerLaserSound());
                 
         this->bulletPositions.push_back(GameStatus::BulletInfo({ 0.0f, (float)-BulletSpeed }, {
             this->position.x + StarshipWidthInPx / 2 + offset,
@@ -209,8 +217,17 @@ bool Player::checkCollision(Vector2 point) {
     return CheckCollisionPointTriangle(point, this->boundingTriangle[0], this->boundingTriangle[1], this->boundingTriangle[2]);
 }
 
-void Player::setIsBeingHit(bool hit) { this->beingHit = hit; }
+void Player::setIsBeingHit(bool hit) {
+    this->beingHit = hit;
+    if (!godMode && hit) {
+        PlaySound(AssetStore::getInstance().getPlayerHitSound());
+        this->life -= DamagePerBullet;
+    }
+}
+
 bool Player::isBeingHit() { return this->beingHit; }
 
 void Player::setPowerLevel(int level) { this->powerLevel = level > MaxPowerLevel ? this->powerLevel : level; }
 int Player::getPowerLevel() { return this->powerLevel; }
+int Player::getLife() { return this->life; }
+void Player::setGodMode(bool godMode) { this->godMode = godMode; }

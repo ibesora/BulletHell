@@ -15,8 +15,11 @@ public:
 	void setIsBeingHit(bool);
 	bool isBeingHit();
 	int getLife();
+	bool hasAppeared();
+	float getAppearingProgress();
 	~Enemy();
 protected:
+	void updateAppearingAnimation();
 	void updatePosition();
 	void updateBoundingTriangle();
 	void updateBulletPosition();
@@ -32,6 +35,9 @@ protected:
 	Vector2 position;
 	Vector2 boundingTriangle[3];
 	int currentFrame;
+	int framesFromStart;
+	bool appeared;
+	float appearingProgress;
 	bool isRightTurretActive;
 	bool isLeftTurretActive;
 	bool beingHit;

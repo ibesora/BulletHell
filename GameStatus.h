@@ -38,12 +38,16 @@ public:
     PowerUp getPowerUp(int index);
     bool isPlayerBeingHit();
     bool isEnemyBeingHit();
+    int getEnemyLife();
+    int getPlayerLife();
+    Music getCurrentSong();
+    bool hasEnemyAppeared();
+    float getEnemyAppearingAnimationProgress();
     ~GameStatus();
 
 protected:
     GameStatus();
     void updateInputs();
-    void updateBullets();
     void updateStarship();
     void updateEnemies();
     void updateBackground();

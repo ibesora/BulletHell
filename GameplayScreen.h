@@ -21,7 +21,11 @@ private:
     void drawBullets();
     void drawEnemies();
     void drawEnemyBullets();
+    void drawEnemyLife();
+    void drawPlayerLife();
+    void drawText();
     
+    int textAnimFrame;
     Rectangle currentFrameRec;
     Rectangle currentBackgroundRect;
 };
