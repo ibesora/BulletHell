@@ -6,6 +6,7 @@ public:
     AssetStore(AssetStore &other) = delete;
     void operator=(const AssetStore &) = delete;
     static AssetStore& getInstance();
+    Texture2D getLogoTexture() { return this->logoTexture; }
     Texture2D getStarshipRollTexture() { return this->starshipRollTexture; }
     Texture2D getStarshipPitchTexture() { return this->starshipPitchTexture; }
     Texture2D getBackgroundTexture() { return this->backgroundTexture; }
@@ -22,6 +23,7 @@ public:
     void unloadMusic();
 protected:
     AssetStore();
+    Texture2D logoTexture;
     Texture2D starshipRollTexture;
     Texture2D starshipPitchTexture;
     Texture2D backgroundTexture;

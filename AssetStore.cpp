@@ -1,5 +1,6 @@
 #include "AssetStore.h"
 AssetStore::AssetStore() {
+    this->logoTexture = LoadTexture("assets/logo.png");
     this->starshipRollTexture = LoadTexture("assets/SF01a_strip60.png");
     this->starshipPitchTexture = LoadTexture("assets/SF01b_strip60.png");
     this->backgroundTexture = LoadTexture("assets/desert-background.png");

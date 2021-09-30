@@ -1,8 +1,7 @@
 #include "raylib.h"
 #include "Screen.h"
 #include "GameStatus.h"
-//#include "LogoScreen.h"
-#include "GameplayScreen.h"
+#include "LogoScreen.h"
 #include "AssetStore.h"
 #include <ctime>
 
@@ -19,7 +18,7 @@ int main(void) {
     InitAudioDevice();
     AssetStore::getInstance().loadMusic();
 
-    GameStatus::getInstance().setInitialScreen(new GameplayScreen(ScreenWidth, ScreenHeight));
+    GameStatus::getInstance().setInitialScreen(new LogoScreen(ScreenWidth, ScreenHeight));
 
     while (!WindowShouldClose()) {
         UpdateMusicStream(GameStatus::getInstance().getCurrentSong());

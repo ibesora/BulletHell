@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "LogoScreen.h"
 #include "TitleScreen.h"
-#include "Animations.h"
+#include "AssetStore.h"
 
 const int FadeInFramesNum = 60;
 const int VisibleFramesNum = 300;
@@ -20,7 +20,18 @@ void LogoScreen::updateGameStatus() {
 }
 
 void LogoScreen::draw() {
-    currentFrame++;
-    ClearBackground(BLACK);
-    Animations::FadeText("Logo Screen", 190, 200, 20, LIGHTGRAY, currentFrame, FadeInFramesNum, VisibleFramesNum, FadeOutFramesNum);
+    this->currentFrame++;
+    ClearBackground(WHITE);
+    float alpha;
+    if (this->currentFrame < FadeInFramesNum) {
+        alpha = (float)this->currentFrame / (float)FadeInFramesNum;
+    }
+    else if (this->currentFrame < FadeOutStartFramesNum) {
+        alpha = 1.0f;
+    }
+    else {
+        alpha = 1.0f - (this->currentFrame - FadeOutStartFramesNum) / (float)FadeOutFramesNum;
+    }
+
+    DrawTexture(AssetStore::getInstance().getLogoTexture(), 80.0f, this->height / 2 - 450, Fade(WHITE, alpha));
 }
