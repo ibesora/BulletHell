@@ -14,6 +14,7 @@ public:
 	bool checkCollision(Vector2 point);
 	void setIsBeingHit(bool);
 	bool isBeingHit();
+	int getLife();
 	~Enemy();
 protected:
 	void updatePosition();
@@ -34,5 +35,6 @@ protected:
 	bool isRightTurretActive;
 	bool isLeftTurretActive;
 	bool beingHit;
+	int life;
 	std::vector<GameStatus::BulletInfo> bulletPositions;
 };

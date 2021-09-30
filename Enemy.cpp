@@ -12,6 +12,8 @@ const int StarshipWidthInPx = 256;
 const int FramesBetweenTurretChanges = 300;
 const int FramesBetweenTypeChangeChance = 1000;
 const float ChangeBulletPatternProbability = 0.5;
+const int StartingLife = 1000;
+const int DamagePerBullet = 5;
 
 Enemy::Enemy(float x, float y) {
 	this->currentBulletPattern = new CircleBulletPattern();
@@ -21,6 +23,7 @@ Enemy::Enemy(float x, float y) {
 	this->currentFrame = 0;
 	this->isRightTurretActive = true;
 	this->isLeftTurretActive = false;
+	this->life = StartingLife;
 }
 
 void Enemy::update(Player *player) {
@@ -139,11 +142,16 @@ bool Enemy::checkCollision(Vector2 point) {
 
 void Enemy::setIsBeingHit(bool isHit) {
 	this->beingHit = isHit;
+	if (isHit) {
+		this->life -= DamagePerBullet;
+	}
 }
 
 bool Enemy::isBeingHit() {
 	return this->beingHit;
 }
+
+int Enemy::getLife() { return this->life; }
 
 Enemy::~Enemy() {
 	delete this->currentBulletPattern;

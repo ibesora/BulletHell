@@ -1,6 +1,7 @@
 #include "GameStatus.h"
 #include "Screen.h"
 #include "EndingScreen.h"
+#include "WinScreen.h"
 #include "raylib.h"
 #include "AssetStore.h"
 #include "InputHandler.h"
@@ -16,6 +17,7 @@ const float CloudProbability = 0.015f;
 const float PowerUpProbability = 0.005;
 const int StarshipWidthInPx = 256;
 const int StarshipHeightInPx = 256;
+const bool GodMode = true;
 
 GameStatus::GameStatus() {
     this->isPlaying = false;
@@ -65,7 +67,8 @@ void GameStatus::update() {
         this->updateBackground();
         this->updateClouds();
         this->updatePowerUps();
-        if (this->player->isBeingHit()) this->changeCurrentScreen(new EndingScreen(this->currentScreen->getWidth(), this->currentScreen->getHeight()));
+        if (this->player->isBeingHit() && !GodMode) this->changeCurrentScreen(new EndingScreen(this->currentScreen->getWidth(), this->currentScreen->getHeight()));
+        if (this->enemy->getLife() == 0) this->changeCurrentScreen(new WinScreen(this->currentScreen->getWidth(), this->currentScreen->getHeight()));
     }
 
     this->getCurrentScreen()->updateGameStatus();
@@ -122,7 +125,7 @@ void GameStatus::updateClouds() {
 
 void GameStatus::updatePowerUps() {
     const float diceThrow = (float)std::rand() / (float)RAND_MAX;
-    const bool shouldWeAddAPowerUp = diceThrow < PowerUpProbability;
+    const bool shouldWeAddAPowerUp = diceThrow < PowerUpProbability && this->powerUps.size() < 2;
     if (shouldWeAddAPowerUp) {
         const float posX = (float)(std::rand() % (BackgroundWidthInPx - AssetStore::getInstance().getPowerUpTexture().width));
         this->powerUps.push_back(PowerUp(posX, -AssetStore::getInstance().getPowerUpTexture().height));

@@ -165,6 +165,7 @@
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="SpiralBulletPattern.cpp" />
     <ClCompile Include="TitleScreen.cpp" />
+    <ClCompile Include="WinScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="TitleScreen.h" />
     <ClInclude Include="LogoScreen.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="WinScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
