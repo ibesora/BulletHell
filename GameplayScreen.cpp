@@ -8,6 +8,7 @@
 #include "AssetStore.h"
 #include "PowerUp.h"
 #include "Animations.h"
+#include "Texts.h"
 
 const int StarshipWidthInPx = 256;
 const int BackgroundWidthInPx = 1920;
@@ -180,7 +181,7 @@ void GameplayScreen::drawPlayerLife() {
 void GameplayScreen::drawText() {
     if (!GameStatus::getInstance().hasEnemyAppeared()) {
         this->textAnimFrame++;
-        Animations::FadeText("Enemic a prop", 150, this->height / 2 - 50, 100, RED, this->textAnimFrame, FadeInFramesNum, VisibleFramesNum, FadeOutFramesNum);
+        Animations::FadeText(Texts::EnemyIncomingText, 150, this->height / 2 - 50, 100, RED, this->textAnimFrame, FadeInFramesNum, VisibleFramesNum, FadeOutFramesNum);
         if (this->textAnimFrame == TotalTextAnimationFrames) this->textAnimFrame = 0;
     }
 }

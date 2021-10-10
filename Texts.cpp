@@ -27,3 +27,4 @@ const char *Texts::MissionTitle = "MISSION";
 const char *Texts::MissionText = "Survive";
 const char *Texts::TryAgainText = "Try again";
 const char *Texts::BackToTitleText = "Back to title";
+const char *Texts::EnemyIncomingText = "Enemy incoming";
