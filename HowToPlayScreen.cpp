@@ -86,6 +86,6 @@ void HowToPlayScreen::draw() {
     top += textSize;
     DrawText(Texts::MissionText, left, top, textSize * 2, RED);
     top = this->height - bottomMargin;
-    DrawText(Texts::GoBackToTitleScreen, left * 3, top, textSize, RED);
+    DrawText(Texts::GoBackToTitleScreen, left * 3, top, textSize, YELLOW);
 
 }
