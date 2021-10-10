@@ -8,6 +8,8 @@ AssetStore::AssetStore() {
     this->foregroundTexture = LoadTexture("assets/clouds.png");
     this->mainEnemyTexture = LoadTexture("assets/enemy_big.png");
     this->powerUpTexture = LoadTexture("assets/powerup.png");
+    this->youWonTexture = LoadTexture("assets/win.png");
+    this->youDiedTexture = LoadTexture("assets/lose.png");
     this->menuSong = LoadMusicStream("assets/Loveshadow_-_Stay_Calm_1.mp3");
     this->gameSong = LoadMusicStream("assets/Loveshadow_-_TRANSMUTED_(_N_f_r_)_1.mp3");
     this->playerLaserSound = LoadSound("assets/laserSmall_004.ogg");
@@ -21,6 +23,19 @@ AssetStore::AssetStore() {
     SetSoundVolume(this->powerUpSound, 0.05f);
     SetSoundVolume(this->playerHitSound, 0.3f);
     SetSoundVolume(this->playerDiedSound, 0.5f);
+}
+
+void AssetStore::unloadTextures() {
+    UnloadTexture(this->logoTexture);
+    UnloadTexture(this->titleTexture);
+    UnloadTexture(this->starshipRollTexture);
+    UnloadTexture(this->starshipPitchTexture);
+    UnloadTexture(this->backgroundTexture);
+    UnloadTexture(this->foregroundTexture);
+    UnloadTexture(this->mainEnemyTexture);
+    UnloadTexture(this->powerUpTexture);
+    UnloadTexture(this->youWonTexture);
+    UnloadTexture(this->youDiedTexture);
 }
 
 void AssetStore::loadMusic() {

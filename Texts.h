@@ -26,4 +26,6 @@ public:
 	static const char *GetPowerup;
 	static const char *MissionTitle;
 	static const char *MissionText;
+	static const char *TryAgainText;
+	static const char *BackToTitleText;
 };

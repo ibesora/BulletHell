@@ -24,3 +24,5 @@ const char *Texts::Shoot = "Press SPACEBAR to shoot";
 const char *Texts::GetPowerup = "Get this item to increase fire power";
 const char *Texts::MissionTitle = "MISSION";
 const char *Texts::MissionText = "Survive";
+const char *Texts::TryAgainText = "Try again";
+const char *Texts::BackToTitleText = "Back to title";

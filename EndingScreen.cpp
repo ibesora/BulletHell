@@ -6,6 +6,7 @@
 #include "Animations.h"
 #include "AssetStore.h"
 #include <stdlib.h>
+#include "Texts.h"
 
 const int FadeInFramesNum = 60;
 const int VisibleFramesNum = 0;
@@ -35,19 +36,26 @@ void EndingScreen::updateGameStatus() {
             GameStatus::getInstance().changeCurrentScreen(nextScreen);
         }
     }
+    else {
+        this->currentFrame++;
+    }
 }
 
 void EndingScreen::draw() {
     ClearBackground(BLACK);
-
-    if (this->currentFrame < TotalFramesNum) {
-        Animations::FadeText("You died", 190, 330, 20, LIGHTGRAY, currentFrame, FadeInFramesNum, VisibleFramesNum, FadeOutFramesNum);
-        this->currentFrame++;
+    float alpha = 0.0f;
+    if (this->currentFrame < FadeInFramesNum) {
+        alpha = (float)this->currentFrame / (float)FadeInFramesNum;
     }
-    else {
-        DrawText("You died", 190, 330, 20, LIGHTGRAY);
-        DrawText(currentSelectedOption == Option::NextRun ? "Try again <-" : "Try again", 190, 350, 20, LIGHTGRAY);
-        DrawText(currentSelectedOption == Option::BackToTitle ? "Back to title <-" : "Back to title", 190, 370, 20, LIGHTGRAY);
+    else if (this->currentFrame <= FadeOutStartFramesNum) {
+        alpha = 1.0f;
+    }
+
+    DrawTexture(AssetStore::getInstance().getYouDiedTexture(), 80.0f, this->height / 2 - 450, Fade(WHITE, alpha < 0.01 ? 0.01 : alpha));
+
+    if (this->currentFrame >= FadeOutStartFramesNum) {
+        DrawText(Texts::TryAgainText, 190, 650, 20, currentSelectedOption == Option::NextRun ? RED : LIGHTGRAY);
+        DrawText(Texts::BackToTitleText, 190, 670, 20, currentSelectedOption == Option::BackToTitle ? RED : LIGHTGRAY);
     }
 
 }
