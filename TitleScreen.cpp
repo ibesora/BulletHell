@@ -48,7 +48,7 @@ void TitleScreen::draw() {
     ClearBackground(BLACK);
 
     if (this->currentFrame < TransitionDurationInFrames) {
-        DrawTexture(AssetStore::getInstance().getTitleTexture(), 80, (this->height / 2 - 400) * currentFrame / (float)TransitionDurationInFrames, WHITE);
+        DrawTexture(AssetStore::getInstance().getTitleTexture(), 80, (int)((this->height / 2 - 400) * currentFrame / (float)TransitionDurationInFrames), WHITE);
         this->currentFrame++;
     }
     else {

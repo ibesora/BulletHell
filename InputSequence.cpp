@@ -15,7 +15,7 @@ void InputSequence::add(KeyStatus status, KeyboardKey key) {
 }
 
 int InputSequence::size() {
-	return this->inputSequence.size();
+	return (int)this->inputSequence.size();
 }
 
 InputSequence::Input InputSequence::last() {

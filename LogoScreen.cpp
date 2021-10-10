@@ -33,5 +33,5 @@ void LogoScreen::draw() {
         alpha = 1.0f - (this->currentFrame - FadeOutStartFramesNum) / (float)FadeOutFramesNum;
     }
 
-    DrawTexture(AssetStore::getInstance().getLogoTexture(), 80.0f, this->height / 2 - 450, Fade(WHITE, alpha < 0.01 ? 0.01 : alpha));
+    DrawTexture(AssetStore::getInstance().getLogoTexture(), 80, this->height / 2 - 450, Fade(WHITE, alpha < 0.01f ? 0.01f : alpha));
 }

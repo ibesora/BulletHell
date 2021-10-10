@@ -67,7 +67,7 @@ void Enemy::updateBoundingTriangle() {
 }
 
 void Enemy::updateBullets(Player* player) {
-	const int enemyPositionCenter = GameStatus::getInstance().getEnemyPosition().x + AssetStore::getInstance().getMainEnemyTexture().width / 2;
+	const int enemyPositionCenter = (int)GameStatus::getInstance().getEnemyPosition().x + AssetStore::getInstance().getMainEnemyTexture().width / 2;
 	this->currentFrame++;
 	this->updateBulletPosition();
 	this->changeBulletPatternThrow();
@@ -144,12 +144,12 @@ Vector2 Enemy::getPosition() {
 }
 
 Vector2 Enemy::getRightTurretPosition() {
-	const int enemyPositionCenter = this->position.x + StarshipWidthInPx / 2;
+	const int enemyPositionCenter = (int)this->position.x + StarshipWidthInPx / 2;
 	return { enemyPositionCenter - 15.0f, 150.0f };
 }
 
 Vector2 Enemy::getLeftTurretPosition() {
-	const int enemyPositionCenter = this->position.x + StarshipWidthInPx / 2;
+	const int enemyPositionCenter = (int)this->position.x + StarshipWidthInPx / 2;
 	return { enemyPositionCenter + 15.0f, 150.0f };
 }
 

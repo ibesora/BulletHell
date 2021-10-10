@@ -41,7 +41,7 @@ void WinScreen::draw() {
         alpha = 1.0f;
     }
 
-    DrawTexture(AssetStore::getInstance().geYouWonTexture(), 80.0f, this->height / 2 - 400, Fade(WHITE, alpha < 0.01 ? 0.01 : alpha));
+    DrawTexture(AssetStore::getInstance().geYouWonTexture(), 80, this->height / 2 - 400, Fade(WHITE, alpha < 0.01f ? 0.01f : alpha));
 
     if (this->currentFrame >= FadeOutStartFramesNum) {
         TextRenderer::getInstance().draw(Texts::GoBackToTitleScreen, 190, 670, 20, YELLOW);

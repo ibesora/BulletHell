@@ -7,7 +7,7 @@ void SpiralBulletPattern::createBullet(int currentFrame, bool rightTurretActive,
     const int numBulletSources = 20;
     const int numPhases = 5;
     for (int i = 0; i < numPhases; ++i) {
-        float angle = (currentFrame / numBulletSources % numBulletSources * M_PI / numBulletSources) - i * M_PI / numPhases + M_PI * 0.75;
+        float angle = (float)((currentFrame / numBulletSources % numBulletSources * M_PI / numBulletSources) - i * M_PI / numPhases + M_PI * 0.75f);
         if (rightTurretActive) {
             bullets->push_back(GameStatus::BulletInfo({ cos(angle) * this->bulletSpeed, sin(angle) * this->bulletSpeed }, rightTurretPosition));
         }
