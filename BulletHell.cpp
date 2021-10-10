@@ -2,7 +2,9 @@
 #include "Screen.h"
 #include "GameStatus.h"
 #include "LogoScreen.h"
+#include "TitleScreen.h"
 #include "AssetStore.h"
+#include "HowToPlayScreen.h"
 #include <ctime>
 
 const int ScreenHeight = 1280;
@@ -18,7 +20,8 @@ int main(void) {
     InitAudioDevice();
     AssetStore::getInstance().loadMusic();
 
-    GameStatus::getInstance().setInitialScreen(new LogoScreen(ScreenWidth, ScreenHeight));
+    //GameStatus::getInstance().setInitialScreen(new LogoScreen(ScreenWidth, ScreenHeight));
+    GameStatus::getInstance().setInitialScreen(new HowToPlayScreen(ScreenWidth, ScreenHeight));
 
     while (!WindowShouldClose()) {
         UpdateMusicStream(GameStatus::getInstance().getCurrentSong());

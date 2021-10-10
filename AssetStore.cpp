@@ -1,6 +1,7 @@
 #include "AssetStore.h"
 AssetStore::AssetStore() {
     this->logoTexture = LoadTexture("assets/logo.png");
+    this->titleTexture = LoadTexture("assets/title.png");
     this->starshipRollTexture = LoadTexture("assets/SF01a_strip60.png");
     this->starshipPitchTexture = LoadTexture("assets/SF01b_strip60.png");
     this->backgroundTexture = LoadTexture("assets/desert-background.png");
@@ -13,6 +14,7 @@ AssetStore::AssetStore() {
     this->powerUpSound = LoadSound("assets/doorOpen_002.ogg");
     this->playerHitSound = LoadSound("assets/impactMetal_004.ogg");
     this->playerDiedSound = LoadSound("assets/explosionCrunch_002.ogg");
+
     SetMusicVolume(this->menuSong, 0.1f);
     SetMusicVolume(this->gameSong, 0.1f);
     SetSoundVolume(this->playerLaserSound, 0.05f);

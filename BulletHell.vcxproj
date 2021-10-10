@@ -157,6 +157,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameplayScreen.cpp" />
     <ClCompile Include="GameStatus.cpp" />
+    <ClCompile Include="HowToPlayScreen.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="LogoScreen.cpp" />
     <ClCompile Include="PauseScreen.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="SpiralBulletPattern.cpp" />
+    <ClCompile Include="Texts.cpp" />
     <ClCompile Include="TitleScreen.cpp" />
     <ClCompile Include="WinScreen.cpp" />
   </ItemGroup>
@@ -177,6 +179,8 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameplayScreen.h" />
     <ClInclude Include="GameStatus.h" />
+    <ClInclude Include="HowToPlayScreen.h" />
+    <ClInclude Include="Texts.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="InputSequence.h" />
     <ClInclude Include="PauseScreen.h" />

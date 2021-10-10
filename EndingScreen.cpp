@@ -23,8 +23,12 @@ void EndingScreen::updateGameStatus() {
     if (this->currentFrame >= TotalFramesNum) {
         const int selectedOption = static_cast<int>(this->currentSelectedOption);
         const int optionNum = static_cast<int>(Option::End);
-        if (IsKeyPressed(KEY_DOWN)) this->currentSelectedOption = static_cast<Option>((selectedOption + 1) % optionNum);
-        else if (IsKeyPressed(KEY_UP)) this->currentSelectedOption = static_cast<Option>(abs((selectedOption - 1) % optionNum));
+        if (IsKeyPressed(KEY_DOWN)) {
+            this->currentSelectedOption = static_cast<Option>((selectedOption + 1) % optionNum);
+        }
+        else if (IsKeyPressed(KEY_UP)) {
+            this->currentSelectedOption = static_cast<Option>(abs((selectedOption - 1) % optionNum));
+        }
         else if (IsKeyPressed(KEY_ENTER)) {
             Screen *nextScreen = this->currentSelectedOption == Option::NextRun ? (Screen *)(new GameplayScreen(this->width, this->height)) : (Screen *)(new TitleScreen(this->width, this->height, false));
             GameStatus::getInstance().reset();

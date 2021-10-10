@@ -2,11 +2,13 @@
 #include "TitleScreen.h"
 #include "GameplayScreen.h"
 #include "CreditsScreen.h"
+#include "HowToPlayScreen.h"
 #include "GameStatus.h"
-#include "Animations.h"
+#include "AssetStore.h"
+#include "Texts.h"
 #include <stdlib.h>
 
-const int TransitionDurationInFrames = 120;
+const int TransitionDurationInFrames = 30;
 
 TitleScreen::TitleScreen(int width, int height, const bool shouldAnimate) : Screen(ScreenType::Title, width, height) {
     this->currentFrame = shouldAnimate ? 0 : TransitionDurationInFrames;
@@ -17,11 +19,24 @@ void TitleScreen::updateGameStatus() {
     if (this->currentFrame >= TransitionDurationInFrames) {
         const int selectedOption = static_cast<int>(this->currentSelectedOption);
         const int optionNum = static_cast<int>(Option::End);
-        if (IsKeyPressed(KEY_DOWN)) this->currentSelectedOption = static_cast<Option>((selectedOption + 1) % optionNum);
-        else if (IsKeyPressed(KEY_UP)) this->currentSelectedOption = static_cast<Option>(abs((selectedOption - 1) % optionNum));
+        if (IsKeyPressed(KEY_DOWN)) {
+            this->currentSelectedOption = static_cast<Option>((selectedOption + 1) % optionNum);
+        }
+        else if (IsKeyPressed(KEY_UP)) {
+            this->currentSelectedOption = static_cast<Option>(abs((selectedOption - 1) % optionNum));
+        }
         else if (IsKeyPressed(KEY_ENTER)) {
-            Screen *nextScreen = this->currentSelectedOption == Option::StartGame ? (Screen*)(new GameplayScreen(this->width, this->height)) : (Screen*)(new CreditsScreen(this->width, this->height));
-            if (nextScreen->getType() == ScreenType::Gameplay) GameStatus::getInstance().reset();
+            Screen *nextScreen;
+            if (this->currentSelectedOption == Option::StartGame) {
+                nextScreen = (Screen *)(new GameplayScreen(this->width, this->height));
+                GameStatus::getInstance().reset();
+            }
+            else if (this->currentSelectedOption == Option::HowToPlay) {
+                nextScreen = (Screen *)(new HowToPlayScreen(this->width, this->height));
+            }
+            else {
+                nextScreen = (Screen *)(new CreditsScreen(this->width, this->height));
+            }
             GameStatus::getInstance().changeCurrentScreen(nextScreen);
         }
     }
@@ -29,16 +44,18 @@ void TitleScreen::updateGameStatus() {
 
 void TitleScreen::draw() {
 
-    ClearBackground(RAYWHITE);
+    ClearBackground(BLACK);
 
     if (this->currentFrame < TransitionDurationInFrames) {
-        Animations::MoveText("Title Screen", 20, LIGHTGRAY, 190, 0, 190, 330, currentFrame, TransitionDurationInFrames);
+        DrawTexture(AssetStore::getInstance().getTitleTexture(), 80, (this->height / 2 - 400) * currentFrame / (float)TransitionDurationInFrames, WHITE);
         this->currentFrame++;
     }
     else {
-        DrawText("Title Screen", 190, 330, 20, LIGHTGRAY);
-        DrawText(currentSelectedOption == Option::StartGame ? "Start Game <-" : "Start Game", 190, 350, 20, LIGHTGRAY);
-        DrawText(currentSelectedOption == Option::Credits ? "Credits <-" : "Credits", 190, 370, 20, LIGHTGRAY);
+        DrawTexture(AssetStore::getInstance().getTitleTexture(), 80, this->height / 2 - 400, WHITE);
+        DrawText(Texts::StartGame, 190, 650, 20, currentSelectedOption == Option::StartGame ? RED : WHITE);
+        DrawText(Texts::HowToPlay, 190, 670, 20, currentSelectedOption == Option::HowToPlay ? RED : WHITE);
+        DrawText(Texts::Credits, 190, 690, 20, currentSelectedOption == Option::Credits ? RED : WHITE);
+        DrawText(Texts::PressEnterToSelect, 190, 730, 20, YELLOW);
     }
 
 }

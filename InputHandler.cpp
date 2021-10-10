@@ -59,7 +59,9 @@ bool InputHandler::checkLeftBarrelRoll() {
 
 bool InputHandler::isKeyDown(KeyboardKey key) { return IsKeyDown(key); }
 bool InputHandler::isKeyUp(KeyboardKey key) { return IsKeyUp(key); }
-bool InputHandler::isKeyPressed(KeyboardKey key) { return IsKeyPressed(key); }
+bool InputHandler::isKeyPressed(KeyboardKey key) { 
+    return IsKeyPressed(key);
+}
 bool InputHandler::isKeyReleased(KeyboardKey key) { return IsKeyReleased(key); }
 
 InputHandler::~InputHandler() {

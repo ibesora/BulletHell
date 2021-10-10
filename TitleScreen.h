@@ -7,7 +7,7 @@ public:
     void updateGameStatus();
     void draw();
 private:
-    enum class Option : int { StartGame = 0, Credits, End };
+    enum class Option : int { StartGame = 0, HowToPlay, Credits, End };
     int currentFrame;
     Option currentSelectedOption;
 };
