@@ -30,4 +30,6 @@ public:
 	static const char *TryAgainText;
 	static const char *BackToTitleText;
 	static const char *EnemyIncomingText;
+	static const char *PausedText;
+	static const char *ContinueText;
 };

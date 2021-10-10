@@ -1,6 +1,6 @@
 #pragma once
 #include "Screen.h"
-#include "GameStatus.h";
+#include "GameStatus.h"
 #include <vector>
 
 class AssetStore;
