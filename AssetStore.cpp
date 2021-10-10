@@ -16,6 +16,7 @@ AssetStore::AssetStore() {
     this->powerUpSound = LoadSound("assets/doorOpen_002.ogg");
     this->playerHitSound = LoadSound("assets/impactMetal_004.ogg");
     this->playerDiedSound = LoadSound("assets/explosionCrunch_002.ogg");
+    this->customFont = LoadFont("assets/custom.ttf");
 
     SetMusicVolume(this->menuSong, 0.1f);
     SetMusicVolume(this->gameSong, 0.1f);
@@ -50,6 +51,10 @@ void AssetStore::unloadMusic() {
     UnloadSound(this->powerUpSound);
     UnloadSound(this->playerHitSound);
     UnloadSound(this->playerDiedSound);
+}
+
+void AssetStore::unloadFonts() {
+    UnloadFont(this->customFont);
 }
 
 AssetStore& AssetStore::getInstance() {

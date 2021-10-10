@@ -165,6 +165,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="SpiralBulletPattern.cpp" />
+    <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="Texts.cpp" />
     <ClCompile Include="TitleScreen.cpp" />
     <ClCompile Include="WinScreen.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="GameplayScreen.h" />
     <ClInclude Include="GameStatus.h" />
     <ClInclude Include="HowToPlayScreen.h" />
+    <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="Texts.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="InputSequence.h" />

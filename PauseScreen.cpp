@@ -4,6 +4,7 @@
 #include "GameplayScreen.h"
 #include "GameStatus.h"
 #include <stdlib.h>
+#include "TextRenderer.h"
 
 PauseScreen::PauseScreen(int width, int height) : Screen(ScreenType::Pause, width, height) {
     this->currentSelectedOption = Option::Continue;
@@ -27,8 +28,8 @@ void PauseScreen::updateGameStatus() {
 void PauseScreen::draw() {
 
     ClearBackground(RAYWHITE);
-    DrawText("Pause Screen", 190, 330, 20, LIGHTGRAY);
-    DrawText(currentSelectedOption == Option::Continue? "Continue <-" : "Continue", 190, 350, 20, LIGHTGRAY);
-    DrawText(currentSelectedOption == Option::BackToTitleScreen ? "Back to title <-" : "Back to title", 190, 370, 20, LIGHTGRAY);
+    TextRenderer::getInstance().draw("Pause Screen", 190, 330, 20, LIGHTGRAY);
+    TextRenderer::getInstance().draw(currentSelectedOption == Option::Continue? "Continue <-" : "Continue", 190, 350, 20, LIGHTGRAY);
+    TextRenderer::getInstance().draw(currentSelectedOption == Option::BackToTitleScreen ? "Back to title <-" : "Back to title", 190, 370, 20, LIGHTGRAY);
 
 }

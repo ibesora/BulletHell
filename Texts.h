@@ -14,6 +14,7 @@ public:
 	static const char *GameMusicCredits;
 	static const char *MenuMusicCredits;
 	static const char *SoundFXCredits;
+	static const char *FontCredits;
 	static const char *HowToPlay;
 	static const char *Controls;
 	static const char *GoUp;

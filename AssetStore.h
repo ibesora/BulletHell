@@ -22,7 +22,9 @@ public:
     Sound getPowerUpSound() { return this->powerUpSound; }
     Sound getPlayerHitSound() { return this->playerHitSound; }
     Sound getPlayerDiedSound() { return this->playerDiedSound; }
+    Font getCustomFont() { return this->customFont; }
     void unloadTextures();
+    void unloadFonts();
     void loadMusic();
     void unloadMusic();
 protected:
@@ -43,4 +45,5 @@ protected:
     Sound powerUpSound;
     Sound playerHitSound;
     Sound playerDiedSound;
+    Font customFont;
 };

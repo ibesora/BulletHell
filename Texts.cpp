@@ -12,6 +12,7 @@ const char *Texts::BackgroundCredits = "Luis Zuno (@anzimuz) - Background and fo
 const char *Texts::GameMusicCredits = "Loveshadow - TRANSMUTED ( No f{@r ) - ccmixter.org";
 const char *Texts::MenuMusicCredits = "Loveshadow - Stay Calm - ccmixter.org";
 const char *Texts::SoundFXCredits = "Sci-Fi Sounds - Kenney.nl";
+const char *Texts::FontCredits = "28 Days Later Font - Film Himmel - Jens R. Ziehn";
 const char *Texts::HowToPlay = "How to play";
 const char *Texts::Controls = "Controls";
 const char *Texts::GoUp = "Press UP to go up";

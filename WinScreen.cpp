@@ -7,6 +7,7 @@
 #include "AssetStore.h"
 #include <stdlib.h>
 #include "Texts.h"
+#include "TextRenderer.h"
 
 const int FadeInFramesNum = 60;
 const int VisibleFramesNum = 0;
@@ -43,7 +44,7 @@ void WinScreen::draw() {
     DrawTexture(AssetStore::getInstance().geYouWonTexture(), 80.0f, this->height / 2 - 400, Fade(WHITE, alpha < 0.01 ? 0.01 : alpha));
 
     if (this->currentFrame >= FadeOutStartFramesNum) {
-        DrawText(Texts::GoBackToTitleScreen, 190, 670, 20, YELLOW);
+        TextRenderer::getInstance().draw(Texts::GoBackToTitleScreen, 190, 670, 20, YELLOW);
     }
 
 }

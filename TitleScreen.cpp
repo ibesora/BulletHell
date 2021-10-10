@@ -7,6 +7,7 @@
 #include "AssetStore.h"
 #include "Texts.h"
 #include <stdlib.h>
+#include "TextRenderer.h"
 
 const int TransitionDurationInFrames = 30;
 
@@ -52,10 +53,10 @@ void TitleScreen::draw() {
     }
     else {
         DrawTexture(AssetStore::getInstance().getTitleTexture(), 80, this->height / 2 - 400, WHITE);
-        DrawText(Texts::StartGame, 190, 650, 20, currentSelectedOption == Option::StartGame ? RED : WHITE);
-        DrawText(Texts::HowToPlay, 190, 670, 20, currentSelectedOption == Option::HowToPlay ? RED : WHITE);
-        DrawText(Texts::Credits, 190, 690, 20, currentSelectedOption == Option::Credits ? RED : WHITE);
-        DrawText(Texts::PressEnterToSelect, 190, 730, 20, YELLOW);
+        TextRenderer::getInstance().draw(Texts::StartGame, 190, 650, 20, currentSelectedOption == Option::StartGame ? RED : WHITE);
+        TextRenderer::getInstance().draw(Texts::HowToPlay, 190, 670, 20, currentSelectedOption == Option::HowToPlay ? RED : WHITE);
+        TextRenderer::getInstance().draw(Texts::Credits, 190, 690, 20, currentSelectedOption == Option::Credits ? RED : WHITE);
+        TextRenderer::getInstance().draw(Texts::PressEnterToSelect, 190, 730, 20, YELLOW);
     }
 
 }

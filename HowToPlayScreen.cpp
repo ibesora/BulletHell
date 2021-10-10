@@ -6,6 +6,7 @@
 #include "TitleScreen.h"
 #include "AssetStore.h"
 #include <algorithm>
+#include "TextRenderer.h"
 
 const int MaxAnimationInFrames = 60;
 const int MaxRollAnimationFrame = 10;
@@ -57,35 +58,35 @@ void HowToPlayScreen::draw() {
     int top = textSize;
 
     ClearBackground(BLACK);
-    DrawText(Texts::Controls, left, top, textSize, YELLOW);
+    TextRenderer::getInstance().draw(Texts::Controls, left, top, textSize, YELLOW);
     top += textSize;
-    DrawText(Texts::GoUp, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::GoUp, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
     DrawTextureTiled(AssetStore::getInstance().getStarshipPitchTexture(), this->currentPitchUpAnimRec, { (float)right - starshipWidth, (float)top, 128.0f, 128.0f }, { 0.0f, 0.0f }, 0, 0.5, WHITE);
     top += textSize + starshipHeight;
-    DrawText(Texts::GoDown, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::GoDown, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
     DrawTextureTiled(AssetStore::getInstance().getStarshipPitchTexture(), this->currentPitchDownAnimRec, { (float)right - starshipWidth, (float)top, 128.0f, 128.0f }, { 0.0f, 0.0f }, 0, 0.5, WHITE);
     top += textSize + starshipHeight;
-    DrawText(Texts::GoLeft, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::GoLeft, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
     DrawTextureTiled(AssetStore::getInstance().getStarshipRollTexture(), this->currentRollLeftAnimRec, { (float)right - starshipWidth, (float)top, 128.0f, 128.0f }, { 0.0f, 0.0f }, 0, 0.5, WHITE);
     top += textSize + starshipHeight;
-    DrawText(Texts::GoRight, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::GoRight, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
     DrawTextureTiled(AssetStore::getInstance().getStarshipRollTexture(), this->currentRollRightAnimRec, { (float)right - starshipWidth, (float)top, 128.0f, 128.0f }, { 0.0f, 0.0f }, 0, 0.5, WHITE);
     top += textSize + starshipHeight;
-    DrawText(Texts::BarrelRollLeft, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::BarrelRollLeft, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
     DrawTextureTiled(AssetStore::getInstance().getStarshipRollTexture(), this->currentBarrelRollLeftAnimRec, { (float)right - starshipWidth, (float)top, 128.0f, 128.0f }, { 0.0f, 0.0f }, 0, 0.5, WHITE);
     top += textSize + starshipHeight;
-    DrawText(Texts::BarrelRollRight, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::BarrelRollRight, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
     DrawTextureTiled(AssetStore::getInstance().getStarshipRollTexture(), this->currentBarrelRollRightAnimRec, { (float)right - starshipWidth, (float)top, 128.0f, 128.0f }, { 0.0f, 0.0f }, 0, 0.5, WHITE);
     top += textSize + starshipHeight;
-    DrawText(Texts::Shoot, left, top, textSize, LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::Shoot, left, top, textSize, LIGHTGRAY);
     top += textSize + powerupHalfHeight;
-    DrawText(Texts::GetPowerup, left, top + powerupHalfHeight, textSize, LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::GetPowerup, left, top + powerupHalfHeight, textSize, LIGHTGRAY);
     DrawTextureRec(AssetStore::getInstance().getPowerUpTexture(), this->currentPowerUpAnimRec, { (float)right - powerupHeight - powerupHalfHeight, (float)top }, WHITE);
     top += textSize + powerupHeight;
-    DrawText(Texts::MissionTitle, left, top, textSize, YELLOW);
+    TextRenderer::getInstance().draw(Texts::MissionTitle, left, top, textSize, YELLOW);
     top += textSize;
-    DrawText(Texts::MissionText, left, top, textSize * 2, RED);
+    TextRenderer::getInstance().draw(Texts::MissionText, left, top, textSize * 2, RED);
     top = this->height - bottomMargin;
-    DrawText(Texts::GoBackToTitleScreen, left * 3, top, textSize, YELLOW);
+    TextRenderer::getInstance().draw(Texts::GoBackToTitleScreen, left * 3, top, textSize, YELLOW);
 
 }

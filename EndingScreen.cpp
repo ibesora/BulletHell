@@ -7,6 +7,7 @@
 #include "AssetStore.h"
 #include <stdlib.h>
 #include "Texts.h"
+#include "TextRenderer.h"
 
 const int FadeInFramesNum = 60;
 const int VisibleFramesNum = 0;
@@ -54,8 +55,8 @@ void EndingScreen::draw() {
     DrawTexture(AssetStore::getInstance().getYouDiedTexture(), 80.0f, this->height / 2 - 400, Fade(WHITE, alpha < 0.01 ? 0.01 : alpha));
 
     if (this->currentFrame >= FadeOutStartFramesNum) {
-        DrawText(Texts::TryAgainText, 190, 650, 20, currentSelectedOption == Option::NextRun ? RED : LIGHTGRAY);
-        DrawText(Texts::BackToTitleText, 190, 670, 20, currentSelectedOption == Option::BackToTitle ? RED : LIGHTGRAY);
+        TextRenderer::getInstance().draw(Texts::TryAgainText, 190, 650, 20, currentSelectedOption == Option::NextRun ? RED : LIGHTGRAY);
+        TextRenderer::getInstance().draw(Texts::BackToTitleText, 190, 670, 20, currentSelectedOption == Option::BackToTitle ? RED : LIGHTGRAY);
     }
 
 }
