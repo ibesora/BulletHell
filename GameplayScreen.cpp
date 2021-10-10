@@ -126,7 +126,7 @@ void GameplayScreen::drawForeground() {
 void GameplayScreen::drawBullets() {
     for (int i = 0; i < GameStatus::getInstance().getBulletsNumber(); ++i) {
         GameStatus::BulletInfo bullet = GameStatus::getInstance().getBullet(i);
-        DrawCircleGradient((int)bullet.position.x - GameStatus::getInstance().getBackgroundPosition().x, (int)bullet.position.y, BulletRadius, YELLOW, RED);
+        DrawCircleGradient((int)bullet.position.x - (int)GameStatus::getInstance().getBackgroundPosition().x, (int)bullet.position.y, BulletRadius, YELLOW, RED);
     }
 }
 
@@ -145,7 +145,7 @@ void GameplayScreen::drawEnemies() {
 void GameplayScreen::drawEnemyBullets() {
     for (int i = 0; i < GameStatus::getInstance().getEnemyBulletsNumber(); ++i) {
         GameStatus::BulletInfo bullet = GameStatus::getInstance().getEnemyBullet(i);
-        DrawCircleGradient((int)bullet.position.x - GameStatus::getInstance().getBackgroundPosition().x, (int)bullet.position.y, BulletRadius, BLUE, YELLOW);
+        DrawCircleGradient((int)bullet.position.x - (int)GameStatus::getInstance().getBackgroundPosition().x, (int)bullet.position.y, BulletRadius, BLUE, YELLOW);
     }
 }
 

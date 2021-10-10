@@ -11,5 +11,5 @@ TextRenderer &TextRenderer::getInstance() {
 }
 
 void TextRenderer::draw(const char *text, int posX, int posY, int fontSize, Color color) {
-    DrawTextEx(AssetStore::getInstance().getCustomFont(), text, { (float)posX, (float)posY }, fontSize, 0, color);
+    DrawTextEx(AssetStore::getInstance().getCustomFont(), text, { (float)posX, (float)posY }, (float)fontSize, 0, color);
 }

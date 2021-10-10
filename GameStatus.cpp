@@ -6,7 +6,7 @@
 #include "AssetStore.h"
 #include "InputHandler.h"
 #include "Player.h"
-#include "Enemy.h";
+#include "Enemy.h"
 #include "PowerUp.h"
 
 const int BackgroundSpeed = 5;
@@ -14,7 +14,7 @@ const int BackgroundWidthInPx = 1920;
 const int CloudsMinSpeed = 5;
 const int CloudsMaxSpeed = 10;
 const float CloudProbability = 0.015f;
-const float PowerUpProbability = 0.005;
+const float PowerUpProbability = 0.005f;
 const int StarshipWidthInPx = 256;
 const int StarshipHeightInPx = 256;
 const bool GodMode = true;
@@ -112,7 +112,7 @@ void GameStatus::updateClouds() {
     const float diceThrow = (float)std::rand() / (float)RAND_MAX;
     const bool shouldWeAddACloud = diceThrow < CloudProbability;
     if (shouldWeAddACloud) {
-        const int speed = (float)(std::rand() % (CloudsMaxSpeed - CloudsMinSpeed) + CloudsMinSpeed);
+        const int speed = (int)(std::rand() % (CloudsMaxSpeed - CloudsMinSpeed) + CloudsMinSpeed);
         CloudInfo info = CloudInfo(speed, -AssetStore::getInstance().getForegroundTexture().height);
         this->cloudPositions.push_back(info);
     }
@@ -129,7 +129,7 @@ void GameStatus::updatePowerUps() {
     const bool shouldWeAddAPowerUp = diceThrow < PowerUpProbability && this->powerUps.size() < 2;
     if (shouldWeAddAPowerUp) {
         const float posX = (float)(std::rand() % (BackgroundWidthInPx - AssetStore::getInstance().getPowerUpTexture().width));
-        this->powerUps.push_back(PowerUp(posX, -AssetStore::getInstance().getPowerUpTexture().height));
+        this->powerUps.push_back(PowerUp(posX, (float)-AssetStore::getInstance().getPowerUpTexture().height));
     }
 
     // PowerUps position update
@@ -165,26 +165,26 @@ Vector2 GameStatus::getPlayerScreenPosition() {
     // If X position is more than BacgroundWidthInPx - halfWidth we set that as the X position
     const int halfWidth = this->getCurrentScreen()->getWidth() / 2;
     const Vector2 currentPosition = this->player->getPosition();
-    const int starshipSpriteCenter = currentPosition.x + StarshipWidthInPx / 2;
-    int screenPositionX = currentPosition.x;
-    const int screenPositionY = currentPosition.y;
+    const int starshipSpriteCenter = (int)currentPosition.x + StarshipWidthInPx / 2;
+    int screenPositionX = (int)currentPosition.x;
+    const int screenPositionY = (int)currentPosition.y;
 
     if (starshipSpriteCenter <= halfWidth) {}
     else if (starshipSpriteCenter > halfWidth && starshipSpriteCenter < BackgroundWidthInPx - halfWidth) { screenPositionX = halfWidth - StarshipWidthInPx / 2; }
-    else { screenPositionX = halfWidth + currentPosition.x - (BackgroundWidthInPx - halfWidth); }
+    else { screenPositionX = halfWidth + (int)currentPosition.x - (BackgroundWidthInPx - halfWidth); }
 
     return { (float)screenPositionX, (float)screenPositionY };
 }
 
 Vector2 GameStatus::getBackgroundPosition() { return this->backgroundPosition; }
-int GameStatus::getCloudsNumber() { return this->cloudPositions.size(); }
+int GameStatus::getCloudsNumber() { return (int)this->cloudPositions.size(); }
 int GameStatus::getCloudYPosition(int index) { return this->cloudPositions[index].y; }
 
-int GameStatus::getBulletsNumber() { return this->player->getBulletPositions().size(); }
+int GameStatus::getBulletsNumber() { return (int)this->player->getBulletPositions().size(); }
 GameStatus::BulletInfo GameStatus::getBullet(int index) { return this->player->getBulletPositions()[index]; }
-int GameStatus::getEnemyBulletsNumber() { return this->enemy->getBulletPositions().size(); }
+int GameStatus::getEnemyBulletsNumber() { return (int)this->enemy->getBulletPositions().size(); }
 GameStatus::BulletInfo GameStatus::getEnemyBullet(int index) { return this->enemy->getBulletPositions()[index]; }
-int GameStatus::getPowerUpsNumber() { return this->powerUps.size(); }
+int GameStatus::getPowerUpsNumber() { return (int)this->powerUps.size(); }
 PowerUp GameStatus::getPowerUp(int index) { return this->powerUps[index]; }
 bool GameStatus::isPlayerBeingHit() { return this->player->isBeingHit(); }
 bool GameStatus::isEnemyBeingHit() { return this->enemy->isBeingHit(); }
