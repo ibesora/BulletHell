@@ -181,7 +181,7 @@ void GameplayScreen::drawPlayerLife() {
 void GameplayScreen::drawText() {
     if (!GameStatus::getInstance().hasEnemyAppeared()) {
         this->textAnimFrame++;
-        Animations::FadeText(Texts::EnemyIncomingText, 150, this->height / 2 - 50, 100, RED, this->textAnimFrame, FadeInFramesNum, VisibleFramesNum, FadeOutFramesNum);
+        Animations::FadeText(Texts::EnemyIncomingText, 50, this->height / 2 - 50, 100, RED, this->textAnimFrame, FadeInFramesNum, VisibleFramesNum, FadeOutFramesNum);
         if (this->textAnimFrame == TotalTextAnimationFrames) this->textAnimFrame = 0;
     }
 }

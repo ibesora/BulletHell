@@ -17,10 +17,8 @@ public:
 	static const char *FontCredits;
 	static const char *HowToPlay;
 	static const char *Controls;
-	static const char *GoUp;
-	static const char *GoDown;
-	static const char *GoLeft;
-	static const char *GoRight;
+	static const char *GoUpOrDown;
+	static const char *GoLeftOrRight;
 	static const char *BarrelRollLeft;
 	static const char *BarrelRollRight;
 	static const char *Shoot;
@@ -32,4 +30,5 @@ public:
 	static const char *EnemyIncomingText;
 	static const char *PausedText;
 	static const char *ContinueText;
+	static const char *PressEscToQuit;
 };

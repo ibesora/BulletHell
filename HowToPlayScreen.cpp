@@ -60,17 +60,11 @@ void HowToPlayScreen::draw() {
     ClearBackground(BLACK);
     TextRenderer::getInstance().draw(Texts::Controls, left, top, textSize, YELLOW);
     top += textSize;
-    TextRenderer::getInstance().draw(Texts::GoUp, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::GoUpOrDown, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
     DrawTextureTiled(AssetStore::getInstance().getStarshipPitchTexture(), this->currentPitchUpAnimRec, { (float)right - starshipWidth, (float)top, 128.0f, 128.0f }, { 0.0f, 0.0f }, 0, 0.5, WHITE);
     top += textSize + starshipHeight;
-    TextRenderer::getInstance().draw(Texts::GoDown, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
-    DrawTextureTiled(AssetStore::getInstance().getStarshipPitchTexture(), this->currentPitchDownAnimRec, { (float)right - starshipWidth, (float)top, 128.0f, 128.0f }, { 0.0f, 0.0f }, 0, 0.5, WHITE);
-    top += textSize + starshipHeight;
-    TextRenderer::getInstance().draw(Texts::GoLeft, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::GoLeftOrRight, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
     DrawTextureTiled(AssetStore::getInstance().getStarshipRollTexture(), this->currentRollLeftAnimRec, { (float)right - starshipWidth, (float)top, 128.0f, 128.0f }, { 0.0f, 0.0f }, 0, 0.5, WHITE);
-    top += textSize + starshipHeight;
-    TextRenderer::getInstance().draw(Texts::GoRight, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
-    DrawTextureTiled(AssetStore::getInstance().getStarshipRollTexture(), this->currentRollRightAnimRec, { (float)right - starshipWidth, (float)top, 128.0f, 128.0f }, { 0.0f, 0.0f }, 0, 0.5, WHITE);
     top += textSize + starshipHeight;
     TextRenderer::getInstance().draw(Texts::BarrelRollLeft, left, top + starshipHalfHeight, textSize, LIGHTGRAY);
     DrawTextureTiled(AssetStore::getInstance().getStarshipRollTexture(), this->currentBarrelRollLeftAnimRec, { (float)right - starshipWidth, (float)top, 128.0f, 128.0f }, { 0.0f, 0.0f }, 0, 0.5, WHITE);
@@ -87,6 +81,6 @@ void HowToPlayScreen::draw() {
     top += textSize;
     TextRenderer::getInstance().draw(Texts::MissionText, left, top, textSize * 2, RED);
     top = this->height - bottomMargin;
-    TextRenderer::getInstance().draw(Texts::GoBackToTitleScreen, left * 3, top, textSize, YELLOW);
+    TextRenderer::getInstance().draw(Texts::GoBackToTitleScreen, left * 2, top, textSize, YELLOW);
 
 }

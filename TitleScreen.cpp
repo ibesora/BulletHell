@@ -48,15 +48,16 @@ void TitleScreen::draw() {
     ClearBackground(BLACK);
 
     if (this->currentFrame < TransitionDurationInFrames) {
-        DrawTexture(AssetStore::getInstance().getTitleTexture(), 80, (int)((this->height / 2 - 400) * currentFrame / (float)TransitionDurationInFrames), WHITE);
+        DrawTexture(AssetStore::getInstance().getTitleTexture(), 5, (int)((this->height / 2 - 400) * currentFrame / (float)TransitionDurationInFrames), WHITE);
         this->currentFrame++;
     }
     else {
-        DrawTexture(AssetStore::getInstance().getTitleTexture(), 80, this->height / 2 - 400, WHITE);
+        DrawTexture(AssetStore::getInstance().getTitleTexture(), 5, this->height / 2 - 400, WHITE);
         TextRenderer::getInstance().draw(Texts::StartGame, 190, 650, 20, currentSelectedOption == Option::StartGame ? RED : WHITE);
         TextRenderer::getInstance().draw(Texts::HowToPlay, 190, 670, 20, currentSelectedOption == Option::HowToPlay ? RED : WHITE);
         TextRenderer::getInstance().draw(Texts::Credits, 190, 690, 20, currentSelectedOption == Option::Credits ? RED : WHITE);
         TextRenderer::getInstance().draw(Texts::PressEnterToSelect, 190, 730, 20, YELLOW);
+        TextRenderer::getInstance().draw(Texts::PressEscToQuit, 190, 750, 20, YELLOW);
     }
 
 }

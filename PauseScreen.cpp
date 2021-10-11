@@ -29,8 +29,8 @@ void PauseScreen::updateGameStatus() {
 void PauseScreen::draw() {
 
     ClearBackground(BLACK);
-    TextRenderer::getInstance().draw(Texts::PausedText, 190, 610, 20, YELLOW);
-    TextRenderer::getInstance().draw(Texts::ContinueText, 190, 630, 20, currentSelectedOption == Option::Continue ? RED : LIGHTGRAY);
-    TextRenderer::getInstance().draw(Texts::BackToTitleText, 190, 650, 20, currentSelectedOption == Option::BackToTitleScreen ? RED : LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::PausedText, 115, 610, 20, YELLOW);
+    TextRenderer::getInstance().draw(Texts::ContinueText, 115, 630, 20, currentSelectedOption == Option::Continue ? RED : LIGHTGRAY);
+    TextRenderer::getInstance().draw(Texts::BackToTitleText, 115, 650, 20, currentSelectedOption == Option::BackToTitleScreen ? RED : LIGHTGRAY);
 
 }

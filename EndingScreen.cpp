@@ -52,7 +52,7 @@ void EndingScreen::draw() {
         alpha = 1.0f;
     }
 
-    DrawTexture(AssetStore::getInstance().getYouDiedTexture(), 80, this->height / 2 - 400, Fade(WHITE, alpha < 0.01f ? 0.01f : alpha));
+    DrawTexture(AssetStore::getInstance().getYouDiedTexture(), 5, this->height / 2 - 400, Fade(WHITE, alpha < 0.01f ? 0.01f : alpha));
 
     if (this->currentFrame >= FadeOutStartFramesNum) {
         TextRenderer::getInstance().draw(Texts::TryAgainText, 190, 650, 20, currentSelectedOption == Option::NextRun ? RED : LIGHTGRAY);

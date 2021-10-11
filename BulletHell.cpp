@@ -5,8 +5,8 @@
 #include "AssetStore.h"
 #include <ctime>
 
-const int ScreenHeight = 1280;
-const int ScreenWidth = (int)(ScreenHeight * 0.75); // 960px -> Emulate a 4:3 portrait monitor as the ones used in old shoot'em ups
+const int ScreenHeight = 1080;
+const int ScreenWidth = (int)(ScreenHeight * 0.75); // 810px -> Emulate a 4:3 portrait monitor as the ones used in old shoot'em ups
 
 int main(void) {
 
