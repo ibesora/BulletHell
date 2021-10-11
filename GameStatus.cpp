@@ -51,6 +51,8 @@ void GameStatus::reset() {
     this->backgroundPosition = { 0.0f, 0.0f };
     this->cloudPositions.clear();
     this->powerUps.clear();
+    SeekMusicStream(AssetStore::getInstance().getGameSong(), 0);
+    SeekMusicStream(AssetStore::getInstance().getMenuSong(), 0);
     InputHandler::getInstance().reset();
 }
 
